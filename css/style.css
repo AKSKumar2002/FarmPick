@@ -560,7 +560,7 @@ footer{
 }
 
 .footer-links strong{
-  color: #000000;
+  color: #ffffff;
   font-size: 1.4rem;
   font-weight: 600;
 }
@@ -568,7 +568,7 @@ footer{
   margin-top: 10px;
 }
 .footer-links ul li a{
-  color: #ffffff;
+  color: #000000;
   opacity: 0.5;
   margin: 4px 0;
   font-size: 0.9rem;
