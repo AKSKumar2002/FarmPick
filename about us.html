@@ -5,6 +5,8 @@
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <title>About Us | Farmpick</title>
   <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;500;600&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+
   <style>
     * {
       box-sizing: border-box;
@@ -16,6 +18,144 @@
       padding: 0;
       background-color: #f4f6f8;
       color: #333;
+    }
+
+    /* Navigation Panel */
+    .navigation {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      background: #ffffff;
+      padding: 15px 30px;
+      box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+      position: sticky;
+      top: 0;
+      z-index: 999;
+    }
+
+    .logo {
+      font-size: 1.8rem;
+      font-weight: 600;
+      text-decoration: none;
+      color: #388E3C;
+    }
+
+    .logo span {
+      color: #4CAF50;
+    }
+
+    .menu-btn {
+      display: none;
+    }
+
+    .menu {
+      list-style: none;
+      display: flex;
+      .menu {
+  list-style: none;
+  display: flex;
+  gap: 25px;
+  margin: 0;
+  padding: 0;
+  justify-content: flex-start;
+}
+
+      gap: 25px;
+      margin: 0;
+      padding: 0;
+    }
+
+    .menu li a {
+      text-decoration: none;
+      font-weight: 500;
+      color: #333;
+      transition: color 0.3s ease;
+    }
+
+    .menu li a:hover,
+    .menu li a.active {
+      color: #388E3C;
+    }
+
+    .menu-icon {
+      display: none;
+      cursor: pointer;
+    }
+
+    .nav-icon {
+      background-color: #333;
+      display: block;
+      width: 25px;
+      height: 3px;
+      position: relative;
+    }
+
+    .nav-icon::before,
+    .nav-icon::after {
+      content: "";
+      background-color: #333;
+      width: 25px;
+      height: 3px;
+      position: absolute;
+      left: 0;
+      transition: 0.3s;
+    }
+
+    .nav-icon::before {
+      top: -8px;
+    }
+
+    .nav-icon::after {
+      top: 8px;
+    }
+
+    .right-nav {
+      display: flex;
+      gap: 20px;
+    }
+
+    .right-nav a {
+      position: relative;
+      color: #333;
+      font-size: 1.2rem;
+      text-decoration: none;
+    }
+
+    .right-nav a span {
+      position: absolute;
+      top: -10px;
+      right: -10px;
+      background: #4CAF50;
+      color: white;
+      font-size: 0.7rem;
+      padding: 2px 6px;
+      border-radius: 50%;
+    }
+
+    @media (max-width: 768px) {
+      .menu {
+        flex-direction: column;
+        position: absolute;
+        top: 70px;
+        left: -100%;
+        background: white;
+        width: 100%;
+        padding: 20px 0;
+        text-align: center;
+        transition: left 0.3s ease;
+      }
+
+      .menu-btn:checked ~ .menu {
+        left: 0;
+      }
+
+      .menu-icon {
+        display: block;
+      }
+
+      .right-nav {
+        display: none;
+      }
     }
 
     header {
@@ -76,6 +216,39 @@
       box-shadow: 0 8px 20px rgba(0,0,0,0.15);
     }
 
+    .stats-section {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+      gap: 25px;
+      margin: 40px 0 60px;
+    }
+
+    .stat-card {
+      background: #ffffff;
+      border-radius: 12px;
+      padding: 30px 20px;
+      text-align: center;
+      box-shadow: 0 4px 16px rgba(0, 0, 0, 0.1);
+      transition: transform 0.3s ease, box-shadow 0.3s ease;
+    }
+
+    .stat-card:hover {
+      transform: scale(1.05);
+      box-shadow: 0 10px 24px rgba(0, 0, 0, 0.15);
+    }
+
+    .stat-card h3 {
+      font-size: 2rem;
+      color: #388E3C;
+      margin-bottom: 10px;
+    }
+
+    .stat-card p {
+      font-size: 1rem;
+      color: #555;
+      font-weight: 500;
+    }
+
     .team-section {
       margin-top: 60px;
     }
@@ -130,7 +303,27 @@
     }
   </style>
 </head>
+
 <body>
+
+<!-- Navigation Panel -->
+<nav class="navigation">
+  <a href="index.html" class="logo"><span>Farm</span>Pick</a>
+  <input type="checkbox" class="menu-btn" id="menu-btn">
+  <label for="menu-btn" class="menu-icon">
+    <span class="nav-icon"></span>
+  </label>
+  <ul class="menu">
+    <li><a href="index.html" class="active">Home</a></li>
+    <li><a href="#category">Categories</a></li>
+    <li><a href="/about us.html">About</a></li>
+    <li><a href="#download-app">Contact Us</a></li>
+  </ul>
+  <div class="right-nav">
+    <a href="#" class="like"><i class="far fa-heart"></i><span>0</span></a>
+    <a href="#" class="cart"><i class="fa fa-shopping-cart"></i><span>0</span></a>
+  </div>
+</nav>
 
 <header>
   <h1>About Farmpick</h1>
@@ -140,13 +333,14 @@
 <section>
   <h2>Who We Are</h2>
   <p>
-    At <strong>Farmpick</strong>, we’re redefining the way people experience fruits, vegetables, and daily groceries — whether you're a business sourcing in bulk or a family looking for daily essentials.
-    We bridge the gap between farms and consumers with care, speed, and trust.
+    At <strong>eFarmpick</strong>, we are on a mission to revolutionize the way fresh produce reaches your home. 
+    We connect farmers directly with consumers, ensuring that every household gets farm-fresh, high-quality products while farmers receive a fair price for their hard work.
   </p>
 
   <h2>Our Mission</h2>
   <p>
-    To build a transparent, reliable supply chain that supports local farmers, empowers businesses, and delivers wholesome products to homes and commercial kitchens alike.
+    We envision a world where fresh, healthy, and sustainably grown food is accessible to everyone.
+    By eliminating middlemen, we empower farmers, provide consumers with fresher produce, and create a more transparent and ethical food supply chain.
   </p>
 
   <h2>Why Choose Farmpick?</h2>
@@ -158,19 +352,39 @@
     <div class="feature">🧑‍🌾 Direct from Trusted Sources</div>
   </div>
 
+  <h2>Our Impact</h2>
+  <div class="stats-section">
+    <div class="stat-card">
+      <h3 class="counter" data-target="1800">0</h3>
+      <p>Orders Delivered</p>
+    </div>
+    <div class="stat-card">
+      <h3 class="counter" data-target="150">0</h3>
+      <p>Direct Customers</p>
+    </div>
+    <div class="stat-card">
+      <h3 class="counter" data-target="225">0</h3>
+      <p>Land Acres</p>
+    </div>
+    <div class="stat-card">
+      <h3 class="counter" data-target="50">0</h3>
+      <p>Fresh Vegetables</p>
+    </div>
+  </div>
+
   <div class="team-section">
     <h2>Meet Our Team</h2>
     <div class="team-members">
       <div class="member-card">
         <img src="/images/Rahul.png" alt="Rahul">
         <h3>Rahul</h3>
-        <p><strong>Co-Founder & Operations Head</strong></p>
+        <p><strong>Founder & Operations Head</strong></p>
         <p>Rahul brings years of agricultural supply chain experience and leads the farm-to-shelf logistics with unmatched efficiency.</p>
       </div>
       <div class="member-card">
         <img src="/images/Dharani.png" alt="Dharani">
         <h3>Dharani</h3>
-        <p><strong>Co-Founder & Marketing Lead</strong></p>
+        <p><strong>Founder & Marketing Lead</strong></p>
         <p>Dharani drives our B2B and B2C marketing strategy, ensuring Farmpick stays connected with both businesses and households.</p>
       </div>
     </div>
@@ -178,8 +392,40 @@
 </section>
 
 <footer>
-  <p>&copy; 2025 Farmpick. All rights reserved. Designed by AjithKumar S.</p>
+  <p>&copy; 2025 Farmpick. All copyrights reserved by AjithKumar S.</p>
 </footer>
+
+<!-- JavaScript for animated counters -->
+<script>
+  const counters = document.querySelectorAll('.counter');
+  const speed = 200;
+
+  counters.forEach(counter => {
+    const updateCount = () => {
+      const target = +counter.getAttribute('data-target');
+      const count = +counter.innerText;
+      const increment = Math.ceil(target / speed);
+
+      if (count < target) {
+        counter.innerText = count + increment;
+        setTimeout(updateCount, 10);
+      } else {
+        counter.innerText = target + '+';
+      }
+    };
+
+    const observer = new IntersectionObserver(entries => {
+      entries.forEach(entry => {
+        if (entry.isIntersecting) {
+          updateCount();
+          observer.unobserve(entry.target);
+        }
+      });
+    }, { threshold: 0.6 });
+
+    observer.observe(counter);
+  });
+</script>
 
 </body>
 </html>
