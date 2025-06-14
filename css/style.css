@@ -314,7 +314,7 @@ body{
 
     .service-box strong {
         font-size: 1.4em;
-        color: #0dd134; /* Green color for headings */
+        color: #494949; /* Green color for headings - #0dd134 */
         margin-bottom: 8px;
         display: block; /* Ensures it takes full width */
     }
