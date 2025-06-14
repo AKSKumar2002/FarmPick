@@ -1,460 +1,471 @@
 <!DOCTYPE html>
-<html lang="en">
-  <head>
-    <title>Farm Pick</title>
+<html>
+
+<head>
     <meta charset="utf-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Farm Pick</title>
+    <link rel="stylesheet" type="text/css" href="css/style.css" />
+    <link rel="shortcut icon" href="images/favicon.png" />
+    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v6.1.0/css/all.css"
+        integrity="sha384-eLT4eRYPHTmTsFGFAzjcCWX+wHfUInVWNm9YnwpiatljsZOwXtwV2Hh6sHM6zZD9" crossorigin="anonymous" />
 
-    <link href="https://fonts.googleapis.com/css?family=Poppins:200,300,400,500,600,700,800&display=swap" rel="stylesheet">
-    <link href="https://fonts.googleapis.com/css?family=Lora:400,400i,700,700i&display=swap" rel="stylesheet">
-    <link href="https://fonts.googleapis.com/css?family=Amatic+SC:400,700&display=swap" rel="stylesheet">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:ital,wght@0,100;0,200;0,300;0,400;0,500;0,
+        600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap"
+        rel="stylesheet">
 
-    <link rel="stylesheet" href="css/open-iconic-bootstrap.min.css">
-    <link rel="stylesheet" href="css/animate.css">
+    <style>
+        /* --- Styles for the New Sections --- */
 
-    <link rel="stylesheet" href="css/owl.carousel.min.css">
-    <link rel="stylesheet" href="css/owl.theme.default.min.css">
-    <link rel="stylesheet" href="css/magnific-popup.css">
+        /* Customer Reviews Section */
+        #customer-reviews {
+            padding: 40px 20px;
+            text-align: center;
+            background-color: #f9f9f9;
+        }
 
-    <link rel="stylesheet" href="css/aos.css">
+        #customer-reviews h2 {
+            font-size: 2em;
+            margin-bottom: 30px;
+            color: #333;
+        }
 
-    <link rel="stylesheet" href="css/ionicons.min.css">
+        .review-container {
+            display: flex;
+            overflow-x: auto;
+            /* Enables horizontal scrolling */
+            scroll-behavior: smooth;
+            /* Smooth scroll effect */
+            gap: 25px;
+            /* Space between review cards */
+            padding: 20px 0;
+            margin-top: 20px;
+            -webkit-overflow-scrolling: touch;
+            /* For smoother scrolling on iOS */
+            /* Hide scrollbar for aesthetic purposes */
+            scrollbar-width: none;
+            /* Firefox */
+            -ms-overflow-style: none;
+            /* IE and Edge */
+        }
 
-    <link rel="stylesheet" href="css/bootstrap-datepicker.css">
-    <link rel="stylesheet" href="css/jquery.timepicker.css">
+        .review-container::-webkit-scrollbar {
+            display: none;
+            /* Chrome, Safari, Opera */
+        }
+
+        .review-card {
+            flex: 0 0 320px;
+            /* Fixed width, no shrinking/growing */
+            background-color: #fff;
+            border: 1px solid #e0e0e0;
+            padding: 25px;
+            border-radius: 10px;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            text-align: center;
+            transition: transform 0.3s ease-in-out;
+        }
+
+        .review-card:hover {
+            transform: translateY(-5px);
+        }
+
+        .review-card img {
+            width: 70px;
+            height: 70px;
+            border-radius: 50%;
+            object-fit: cover;
+            margin-bottom: 15px;
+            border: 3px solid #0dd134;
+        }
+
+        .review-card strong {
+            font-size: 1.2em;
+            color: #222;
+            margin-bottom: 5px;
+        }
+
+        .review-card .rating {
+            color: gold;
+            margin-bottom: 15px;
+            font-size: 1.1em;
+        }
+
+        .review-card p {
+            font-size: 0.95em;
+            color: #555;
+            line-height: 1.6;
+        }
+
+        /* Price Comparison Section */
+        #price-comparison {
+            padding: 40px 20px;
+            text-align: center;
+            background-color: #fff;
+        }
+
+        #price-comparison h2 {
+            font-size: 2em;
+            margin-bottom: 30px;
+            color: #333;
+        }
+
+        #price-comparison table {
+            width: 90%;
+            max-width: 800px;
+            margin: 20px auto;
+            border-collapse: collapse;
+            border: 1px solid #ddd;
+            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.05);
+            /* Center the table itself */
+            margin-left: auto;
+            margin-right: auto;
+        }
+
+        #price-comparison th,
+        #price-comparison td {
+            border: 1px solid #eee;
+            padding: 12px 15px;
+            text-align: left;
+            font-size: 1em;
+        }
+
+        #price-comparison th {
+            background-color: #f2f2f2;
+            font-weight: 600;
+            color: #333;
+        }
+
+        #price-comparison tr:nth-child(even) {
+            background-color: #f8f8f8;
+        }
+
+        #price-comparison tr:hover {
+            background-color: #f1f1f1;
+        }
+
+        /* Specific styling for savings column */
+        #price-comparison td:last-child {
+            font-weight: bold;
+            color: #0dd134;
+            /* Ensure text in the last column is centered if desired, or left aligned as per current setup */
+            text-align: center; /* Added for better alignment of savings */
+        }
+
+        /* Align text in numerical columns to the right for better readability */
+        #price-comparison td:nth-child(2),
+        #price-comparison td:nth-child(3) {
+            text-align: center; /* Adjusted to center for all price columns */
+        }
+
+        #price-comparison th:nth-child(2),
+        #price-comparison th:nth-child(3),
+        #price-comparison th:nth-child(4) {
+            text-align: center; /* Align table headers for price and savings */
+        }
 
 
-    <link rel="stylesheet" href="css/flaticon.css">
-    <link rel="stylesheet" href="css/icomoon.css">
-    <link rel="stylesheet" href="css/style.css">
-  </head>
-  <body class="goto-here">
-		<div class="py-1 bg-primary">
-    	<div class="container">
-    		<div class="row no-gutters d-flex align-items-start align-items-center px-md-0">
-	    		<div class="col-lg-12 d-block">
-		    		<div class="row d-flex">
-		    			<div class="col-md pr-4 d-flex topper align-items-center">
-					    	<div class="icon mr-2 d-flex justify-content-center align-items-center"><span class="icon-phone2"></span></div>
-						    <span class="text">+91 88259 35176</span>
-					    </div>
-					    <div class="col-md pr-4 d-flex topper align-items-center">
-					    	<div class="icon mr-2 d-flex justify-content-center align-items-center"><span class="icon-paper-plane"></span></div>
-						    <span class="text">hello@e-farmpick.in</span>
-					    </div>
-					    <div class="col-md-5 pr-4 d-flex topper align-items-center text-lg-right">
-						    <span class="text">Orders taken on Business days, All deliveries on Weekends</span>
-					    </div>
-				    </div>
-			    </div>
-		    </div>
-		  </div>
-    </div>
-    <nav class="navbar navbar-expand-lg navbar-dark ftco_navbar bg-dark ftco-navbar-light" id="ftco-navbar">
-	    <div class="container">
-	      <a class="navbar-brand" href="index.html">🌿 Farm Pick</a>
-	      <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#ftco-nav" aria-controls="ftco-nav" aria-expanded="false" aria-label="Toggle navigation">
-	        <span class="oi oi-menu"></span> Menu
-	      </button>
+        /* --- Existing Styles (if any) and other sections --- */
+        /* You might have existing styles in style.css. Ensure there are no conflicts. */
 
-	      <div class="collapse navbar-collapse" id="ftco-nav">
-	        <ul class="navbar-nav ml-auto">
-	          <li class="nav-item active"><a href="index.html" class="nav-link">Home</a></li>
-	          <li class="nav-item dropdown">
-              <a class="nav-link dropdown-toggle" href="#" id="dropdown04" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Shop</a>
-              <div class="dropdown-menu" aria-labelledby="dropdown04">
-              	<a class="dropdown-item" href="shop.html">Shop</a>
-              	<!-- <a class="dropdown-item" href="wishlist.html">Wishlist</a> -->
-                <!-- <a class="dropdown-item" href="product-single.html">Single Product</a> -->
-                <!-- <a class="dropdown-item" href="cart.html">Cart</a> -->
-                <!-- <a class="dropdown-item" href="checkout.html">Checkout</a> -->
-              </div>
-            </li>
-	          <li class="nav-item"><a href="about.html" class="nav-link">About</a></li>
-	          <li class="nav-item"><a href="blog.html" class="nav-link">Blog</a></li>
-	          <li class="nav-item"><a href="contact.html" class="nav-link">Contact</a></li>
-	          <!-- <li class="nav-item cta cta-colored"><a href="cart.html" class="nav-link"><span class="icon-shopping_cart"></span>[0]</a></li> -->
+        /* General heading style (if not already defined in style.css) */
+        .section-heading {
+            font-size: 2.2em;
+            color: #333;
+            text-align: center;
+            margin-bottom: 40px;
+            position: relative;
+        }
 
-	        </ul>
-	      </div>
-	    </div>
-	  </nav>
-    <!-- END nav -->
+        .section-heading::after {
+            content: '';
+            width: 70px;
+            height: 4px;
+            background-color: #0dd134;
+            display: block;
+            margin: 10px auto 0;
+            border-radius: 2px;
+        }
+    </style>
+</head>
 
-    <section id="home-section" class="hero">
-		  <div class="home-slider owl-carousel">
-	      <div class="slider-item" style="background-image: url(images/bg_1.jpg);">
-	      	<div class="overlay"></div>
-	        <div class="container">
-	          <div class="row slider-text justify-content-center align-items-center" data-scrollax-parent="true">
+<body>
+    <nav class="navigation">
+        <a href="index.html" class="logo">
+            <span>🌿 Farm</span>Pick
+        </a>
+        <input type="checkbox" class="menu-btn" id="menu-btn">
+        <label for="menu-btn" class="menu-icon">
+            <span class="nav-icon"></span>
+        </label>
+        <ul class="menu">
+            <li><a href="index.html" class="active">Home</a></li>
+            <li><a href="#category">Shop</a></li>
+            <li><a href="/about us.html">About</a></li>
+            <li><a href="#download-app">Contact US</a></li>
+        </ul>
+        <div class="right-nav">
+            <a href="#" class="like">
+                <i class="far fa-heart"></i>
+                <span>0</span>
+            </a>
+            <a href="#" class="cart">
+                <i class="fa fa-shopping-cart"></i>
+                <span>0</span>
+            </a>
+        </div>
+    </nav>
+    <section id="search-banner">
+        <img src="images/tomato.png" class="bg-1" alt="bg">
+        <img src="images/salad.png" class="bg-2" alt="bg-2">
 
-	            <div class="col-md-12 ftco-animate text-center">
-	              <h1 class="mb-2">We serve Fresh Vegestables &amp; Fruits</h1>
-	              <h2 class="subheading mb-4">We deliver organic vegetables &amp; fruits</h2>
-	              <p><a href="#" class="btn btn-primary">View Details</a></p>
-	            </div>
-
-	          </div>
-	        </div>
-	      </div>
-
-	      <div class="slider-item" style="background-image: url(images/bg_2.jpg);">
-	      	<div class="overlay"></div>
-	        <div class="container">
-	          <div class="row slider-text justify-content-center align-items-center" data-scrollax-parent="true">
-
-	            <div class="col-sm-12 ftco-animate text-center">
-	              <h1 class="mb-2">100% Fresh &amp; Organic Foods</h1>
-	              <h2 class="subheading mb-4">We deliver organic vegetables &amp; fruits</h2>
-	              <p><a href="#" class="btn btn-primary">View Details</a></p>
-	            </div>
-
-	          </div>
-	        </div>
-	      </div>
-	    </div>
+        <div class="search-banner-text">
+            <h1>Order from our Farm for the day</h1>
+            <strong>#Faster Delivery</strong>
+            <form class="search-box" action="">
+                <i class="fas fa-search"></i>
+                <input type="text" class="search-input" placeholder="Search your daily grocery" name="search" required>
+                <input type="submit" class="btn" value="Search">
+            </form>
+        </div>
+    </section>
+    <section id="category">
+        <div class="category-heading">
+            <h2>Categories</h2>
+            <span></span>
+        </div>
+        <div class="category-container">
+            <a href="#" class="category-box">
+                <img src="images/Fruits1.jpg" alt="Fruits" width="70px" height="70px">
+                <span>Fruits</span>
+            </a>
+            <a href="#" class="category-box">
+                <img src="images/vegetable.png" alt="Vegetables" width="70px" height="70px">
+                <span>Vegetables</span>
+            </a>
+            <a href="#" class="category-box">
+                <img src="images/gardening.png" alt="Organic Items" width="70px" height="70px">
+                <span>Organic Items</span>
+            </a>
+            <a href="#" class="category-box">
+                <img src="images/vegetable.png" alt="Groceries" width="70px" height="70px">
+                <span>Groceries</span>
+            </a>
+            <a href="#" class="category-box">
+                <img src="images/office.png" alt="Business" width="70px" height="70px">
+                <span>Business</span>
+            </a>
+            <a href="#" class="category-box">
+                <img src="images/beauty.png" alt="Fresh Farm" width="70px" height="70px">
+                <span>Fresh Farm</span>
+            </a>
+            <a href="#" class="category-box">
+                <img src="images/gardening.png" alt="Gardening" width="70px" height="70px">
+                <span>Gardening</span>
+            </a>
+        </div>
+    </section>
+    <section id="popular-product">
+        <div class="product-heading">
+            <h3>Popular Product</h3>
+            <span></span>
+        </div>
+        <div class="product-container">
+            <div class="product-box">
+                <img src="images/onion.jpg" alt="onion">
+                <strong>Onion</strong>
+                <span class="quantity">1 KG</span>
+                <span class="price">₹22</span>
+                <a href="#" class="cart-btn">
+                    <i class="fas fa-shopping-bag"></i> Add to Cart
+                </a>
+                <a href="#" class="like-btn">
+                    <i class="far fa-heart"></i>
+                </a>
+            </div>
+            <div class="product-box">
+                <img src="images/Tomato11.jpg" alt="tomato">
+                <strong>Tomato</strong>
+                <span class="quantity">1 KG</span>
+                <span class="price">₹17</span>
+                <a href="#" class="cart-btn">
+                    <i class="fas fa-shopping-bag"></i> Add to Cart
+                </a>
+                <a href="#" class="like-btn">
+                    <i class="far fa-heart"></i>
+                </a>
+            </div>
+            <div class="product-box">
+                <img src="images/cauliflower.jpg" alt="cauliflower">
+                <strong>Cauliflower</strong>
+                <span class="quantity">1 KG</span>
+                <span class="price">₹28</span>
+                <a href="#" class="cart-btn">
+                    <i class="fas fa-shopping-bag"></i> Add to Cart
+                </a>
+                <a href="#" class="like-btn">
+                    <i class="far fa-heart"></i>
+                </a>
+            </div>
+            <div class="product-box">
+                <img src="images/gchilli.jpg" alt="green chilli">
+                <strong>Green Chilli</strong>
+                <span class="quantity">1 KG</span>
+                <span class="price">₹40</span>
+                <a href="#" class="cart-btn">
+                    <i class="fas fa-shopping-bag"></i> Add to Cart
+                </a>
+                <a href="#" class="like-btn">
+                    <i class="far fa-heart"></i>
+                </a>
+            </div>
+            <div class="product-box">
+                <img src="images/potato.jpg" alt="potato">
+                <strong>Potato</strong>
+                <span class="quantity">1 KG</span>
+                <span class="price">₹30</span>
+                <a href="#" class="cart-btn">
+                    <i class="fas fa-shopping-bag"></i> Add to Cart
+                </a>
+                <a href="#" class="like-btn">
+                    <i class="far fa-heart"></i>
+                </a>
+            </div>
+            <div class="product-box">
+                <img src="images/lemon.jpg" alt="lemon">
+                <strong>Lemon</strong>
+                <span class="quantity">500 G</span>
+                <span class="price">₹26</span>
+                <a href="#" class="cart-btn">
+                    <i class="fas fa-shopping-bag"></i> Add to Cart
+                </a>
+                <a href="#" class="like-btn">
+                    <i class="far fa-heart"></i>
+                </a>
+            </div>
+            <div class="product-box">
+                <img src="images/carrot.jpg" alt="carrot">
+                <strong>Carrot</strong>
+                <span class="quantity">1 KG</span>
+                <span class="price">₹35</span>
+                <a href="#" class="cart-btn">
+                    <i class="fas fa-shopping-bag"></i> Add to Cart
+                </a>
+                <a href="#" class="like-btn">
+                    <i class="far fa-heart"></i>
+                </a>
+            </div>
+            <div class="product-box">
+                <img src="images/raddish.jpg" alt="radish">
+                <strong>Radish</strong>
+                <span class="quantity">1 KG</span>
+                <span class="price">₹28</span>
+                <a href="#" class="cart-btn">
+                    <i class="fas fa-shopping-bag"></i> Add to Cart
+                </a>
+                <a href="#" class="like-btn">
+                    <i class="far fa-heart"></i>
+                </a>
+            </div>
+            <div class="product-box">
+                <img src="images/Brinjal.jpg" alt="brinjal">
+                <strong>Brinjal</strong>
+                <span class="quantity">1 KG</span>
+                <span class="price">₹37</span>
+                <a href="#" class="cart-btn">
+                    <i class="fas fa-shopping-bag"></i> Add to Cart
+                </a>
+                <a href="#" class="like-btn">
+                    <i class="far fa-heart"></i>
+                </a>
+            </div>
+        </div>
+    </section>
+    <section id="popular-bundle-pack">
+        <div class="product-heading">
+            <h3>Popular Bundle Pack</h3>
+        </div>
+        <div class="product-container">
+            <div class="product-box">
+                <img src="images/pack.jpg" alt="pack">
+                <strong>Huge Pack</strong>
+                <span class="quantity">Apple, Tomato, Potato, +4</span>
+                <span class="price">₹600</span>
+                <a href="#" class="cart-btn">
+                    <i class="fas fa-shopping-bag"></i> Add to Cart
+                </a>
+                <a href="#" class="like-btn">
+                    <i class="far fa-heart"></i>
+                </a>
+            </div>
+            <div class="product-box">
+                <img src="images/large.jpg" alt="large">
+                <strong>Large Pack</strong>
+                <span class="quantity">Potato, Carrot, +3</span>
+                <span class="price">₹350</span>
+                <a href="#" class="cart-btn">
+                    <i class="fas fa-shopping-bag"></i> Add to Cart
+                </a>
+                <a href="#" class="like-btn">
+                    <i class="far fa-heart"></i>
+                </a>
+            </div>
+            <div class="product-box">
+                <img src="images/small.jpg" alt="small">
+                <strong>Small Pack</strong>
+                <span class="quantity">Orange, Potato, +2</span>
+                <span class="price">₹220</span>
+                <a href="#" class="cart-btn">
+                    <i class="fas fa-shopping-bag"></i> Add to Cart
+                </a>
+                <a href="#" class="like-btn">
+                    <i class="far fa-heart"></i>
+                </a>
+            </div>
+        </div>
+    </section>
+    <section id="customer-reviews">
+        <h2>Voices of Trust</h2>
+        <div class="review-container">
+            <div class="review-card">
+                <img src="images/Avvaiyar-.png" alt="Customer 1">
+                <strong>Auvaiyar</strong>
+                <p>Excellent service and high-quality products! I love the freshness of the groceries. Highly recommended for daily needs!</p>
+            </div>
+            <div class="review-card">
+                <img src="images/kannadasan.jpg" alt="Customer 2">
+                <strong>Kannadasan</strong>
+                <p>Convenient and reliable. The delivery is always on time, and the produce is great. A real time-saver!</p>
+            </div>
+            <div class="review-card">
+                <img src="images/bharathiyar logo.jpg" alt="Customer 3">
+                <strong>Bharathiyar</strong>
+                <p>The organic selection is fantastic! I appreciate the wide variety of items available. Always fresh and tasty.</p>
+            </div>
+            <div class="review-card">
+                <img src="images/vairamuthu logo.jpg" alt="Customer 4">
+                <strong>vairamuthu</strong>
+                <p>Great prices and excellent customer support. I highly recommend Farm Pick for all your fresh produce needs!</p>
+            </div>
+            <div class="review-card">
+                <img src="images/ambethkar logo.jpg" alt="Customer 5">
+                <strong>Ambethkar</strong>
+                <p>Farm Pick has made my grocery shopping so easy. The quality is consistently good and the service is prompt.</p>
+            </div>
+            <div class="review-card">
+                <img src="images/vivekanandha.jpg" alt="Customer 6">
+                <strong>Vivekanandha</strong>
+                <p>I'm impressed with the freshness of the vegetables. It feels like getting produce directly from the farm.</p>
+            </div>
+        </div>
     </section>
 
-    <section class="ftco-section">
-			<div class="container">
-				<div class="row no-gutters ftco-services">
-          <div class="col-md-3 text-center d-flex align-self-stretch ftco-animate">
-            <div class="media block-6 services mb-md-0 mb-4">
-              <div class="icon bg-color-1 active d-flex justify-content-center align-items-center mb-2">
-            		<span class="flaticon-shipped"></span>
-              </div>
-              <div class="media-body">
-                <h3 class="heading">Free Shipping</h3>
-                <span>On order over Rs.3000</span>
-              </div>
-            </div>
-          </div>
-          <div class="col-md-3 text-center d-flex align-self-stretch ftco-animate">
-            <div class="media block-6 services mb-md-0 mb-4">
-              <div class="icon bg-color-2 d-flex justify-content-center align-items-center mb-2">
-            		<span class="flaticon-diet"></span>
-              </div>
-              <div class="media-body">
-                <h3 class="heading">Always Fresh</h3>
-                <span>Product well package</span>
-              </div>
-            </div>
-          </div>
-          <div class="col-md-3 text-center d-flex align-self-stretch ftco-animate">
-            <div class="media block-6 services mb-md-0 mb-4">
-              <div class="icon bg-color-3 d-flex justify-content-center align-items-center mb-2">
-            		<span class="flaticon-award"></span>
-              </div>
-              <div class="media-body">
-                <h3 class="heading">Superior Quality</h3>
-                <span>Quality Products</span>
-              </div>
-            </div>
-          </div>
-          <div class="col-md-3 text-center d-flex align-self-stretch ftco-animate">
-            <div class="media block-6 services mb-md-0 mb-4">
-              <div class="icon bg-color-4 d-flex justify-content-center align-items-center mb-2">
-            		<span class="flaticon-customer-service"></span>
-              </div>
-              <div class="media-body">
-                <h3 class="heading">Support</h3>
-                <span>24/7 Support</span>
-              </div>
-            </div>
-          </div>
-        </div>
-			</div>
-		</section>
-
-		<section class="ftco-section ftco-category ftco-no-pt">
-			<div class="container">
-				<div class="row">
-					<div class="col-md-8">
-						<div class="row">
-							<div class="col-md-6 order-md-last align-items-stretch d-flex">
-								<div class="category-wrap-2 ftco-animate img align-self-stretch d-flex" style="background-image: url(images/category.jpg);">
-									<div class="text text-center">
-										<h2>Vegetables</h2>
-										<p>Protect the health of every home</p>
-										<p><a href="#" class="btn btn-primary">Shop now</a></p>
-									</div>
-								</div>
-							</div>
-							<div class="col-md-6">
-								<div class="category-wrap ftco-animate img mb-4 d-flex align-items-end" style="background-image: url(images/category-1.jpg);">
-									<div class="text px-3 py-1">
-										<h2 class="mb-0"><a href="#">Vegetables</a></h2>
-									</div>
-								</div>
-								<div class="category-wrap ftco-animate img d-flex align-items-end" style="background-image: url(images/category-2.jpg);">
-									<div class="text px-3 py-1">
-										<h2 class="mb-0"><a href="#">Fruits</a></h2>
-									</div>
-								</div>
-							</div>
-						</div>
-					</div>
-
-					<div class="col-md-4">
-						<div class="category-wrap ftco-animate img mb-4 d-flex align-items-end" style="background-image: url(images/category-3.jpg);">
-							<div class="text px-3 py-1">
-								<h2 class="mb-0"><a href="#">Nutritional</a></h2>
-							</div>
-						</div>
-						<div class="category-wrap ftco-animate img d-flex align-items-end" style="background-image: url(images/category-4.jpg);">
-							<div class="text px-3 py-1">
-								<h2 class="mb-0"><a href="#">Organic</a></h2>
-							</div>
-						</div>
-					</div>
-				</div>
-			</div>
-		</section>
-
-    <section class="ftco-section">
-    	<div class="container">
-				<div class="row justify-content-center mb-3 pb-3">
-          <div class="col-md-12 heading-section text-center ftco-animate">
-          	<span class="subheading">Featured Products</span>
-            <h2 class="mb-4">Our Products</h2>
-            <p>Fresh Vegetables, across the places to your place.</p>
-          </div>
-        </div>
-    	</div>
-    	<div class="container">
-    		<div class="row">
-    			<div class="col-md-6 col-lg-3 ftco-animate">
-    				<div class="product">
-    					<a href="#" class="img-prod"><img class="img-fluid" src="images/product-1.jpg" alt="fourbic Template">
-    						<span class="status">30%</span>
-    						<div class="overlay"></div>
-    					</a>
-    					<div class="text py-3 pb-4 px-3 text-center">
-    						<h3><a href="#">Bell Pepper</a></h3>
-    						<div class="d-flex">
-    							<div class="pricing">
-		    						<p class="price"><span class="mr-2 price-dc">1kg / ₹ 120.00</span><span class="price-sale">₹90</span></p>
-		    					</div>
-	    					</div>
-	    					<div class="bottom-area d-flex px-3">
-	    						<div class="m-auto d-flex">
-	    							<a href="#" class="add-to-cart d-flex justify-content-center align-items-center text-center">
-	    								<span><i class="ion-ios-menu"></i></span>
-	    							</a>
-	    							<a href="#" class="buy-now d-flex justify-content-center align-items-center mx-1">
-	    								<span><i class="ion-ios-cart"></i></span>
-	    							</a>
-	    							<a href="#" class="heart d-flex justify-content-center align-items-center ">
-	    								<span><i class="ion-ios-heart"></i></span>
-	    							</a>
-    							</div>
-    						</div>
-    					</div>
-    				</div>
-    			</div>
-    			<div class="col-md-6 col-lg-3 ftco-animate">
-    				<div class="product">
-    					<a href="#" class="img-prod"><img class="img-fluid" src="images/product-2.jpg" alt="fourbic Template">
-    						<div class="overlay"></div>
-    					</a>
-    					<div class="text py-3 pb-4 px-3 text-center">
-    						<h3><a href="#">Strawberry</a></h3>
-    						<div class="d-flex">
-    							<div class="pricing">
-		    						<p class="price"><span>1kg / ₹40.00</span></p>
-		    					</div>
-	    					</div>
-    						<div class="bottom-area d-flex px-3">
-	    						<div class="m-auto d-flex">
-	    							<a href="#" class="add-to-cart d-flex justify-content-center align-items-center text-center">
-	    								<span><i class="ion-ios-menu"></i></span>
-	    							</a>
-	    							<a href="#" class="buy-now d-flex justify-content-center align-items-center mx-1">
-	    								<span><i class="ion-ios-cart"></i></span>
-	    							</a>
-	    							<a href="#" class="heart d-flex justify-content-center align-items-center ">
-	    								<span><i class="ion-ios-heart"></i></span>
-	    							</a>
-    							</div>
-    						</div>
-    					</div>
-    				</div>
-    			</div>
-    			<div class="col-md-6 col-lg-3 ftco-animate">
-    				<div class="product">
-    					<a href="#" class="img-prod"><img class="img-fluid" src="images/product-3.jpg" alt="fourbic Template">
-	    					<div class="overlay"></div>
-	    				</a>
-    					<div class="text py-3 pb-4 px-3 text-center">
-    						<h3><a href="#">Green Beans</a></h3>
-    						<div class="d-flex">
-    							<div class="pricing">
-		    						<p class="price"><span>1kg / ₹48.00</span></p>
-		    					</div>
-	    					</div>
-    						<div class="bottom-area d-flex px-3">
-	    						<div class="m-auto d-flex">
-	    							<a href="#" class="add-to-cart d-flex justify-content-center align-items-center text-center">
-	    								<span><i class="ion-ios-menu"></i></span>
-	    							</a>
-	    							<a href="#" class="buy-now d-flex justify-content-center align-items-center mx-1">
-	    								<span><i class="ion-ios-cart"></i></span>
-	    							</a>
-	    							<a href="#" class="heart d-flex justify-content-center align-items-center ">
-	    								<span><i class="ion-ios-heart"></i></span>
-	    							</a>
-    							</div>
-    						</div>
-    					</div>
-    				</div>
-    			</div>
-    			<div class="col-md-6 col-lg-3 ftco-animate">
-    				<div class="product">
-    					<a href="#" class="img-prod"><img class="img-fluid" src="images/product-4.jpg" alt="fourbic Template">
-    						<div class="overlay"></div>
-    					</a>
-    					<div class="text py-3 pb-4 px-3 text-center">
-    						<h3><a href="#">Cabbage</a></h3>
-    						<div class="d-flex">
-    							<div class="pricing">
-		    						<p class="price"><span>1kg / ₹21.00</span></p>
-		    					</div>
-	    					</div>
-    						<div class="bottom-area d-flex px-3">
-	    						<div class="m-auto d-flex">
-	    							<a href="#" class="add-to-cart d-flex justify-content-center align-items-center text-center">
-	    								<span><i class="ion-ios-menu"></i></span>
-	    							</a>
-	    							<a href="#" class="buy-now d-flex justify-content-center align-items-center mx-1">
-	    								<span><i class="ion-ios-cart"></i></span>
-	    							</a>
-	    							<a href="#" class="heart d-flex justify-content-center align-items-center ">
-	    								<span><i class="ion-ios-heart"></i></span>
-	    							</a>
-    							</div>
-    						</div>
-    					</div>
-    				</div>
-    			</div>
-
-
-    			<div class="col-md-6 col-lg-3 ftco-animate">
-    				<div class="product">
-    					<a href="#" class="img-prod"><img class="img-fluid" src="images/product-5.jpg" alt="fourbic Template">
-    						<span class="status">30%</span>
-    						<div class="overlay"></div>
-    					</a>
-    					<div class="text py-3 pb-4 px-3 text-center">
-    						<h3><a href="#">Tomato</a></h3>
-    						<div class="d-flex">
-    							<div class="pricing">
-		    						<p class="price"><span class="mr-2 price-dc">1kg / ₹28.00</span><span class="price-sale">₹16</span></p>
-		    					</div>
-	    					</div>
-	    					<div class="bottom-area d-flex px-3">
-	    						<div class="m-auto d-flex">
-	    							<a href="#" class="add-to-cart d-flex justify-content-center align-items-center text-center">
-	    								<span><i class="ion-ios-menu"></i></span>
-	    							</a>
-	    							<a href="#" class="buy-now d-flex justify-content-center align-items-center mx-1">
-	    								<span><i class="ion-ios-cart"></i></span>
-	    							</a>
-	    							<a href="#" class="heart d-flex justify-content-center align-items-center ">
-	    								<span><i class="ion-ios-heart"></i></span>
-	    							</a>
-    							</div>
-    						</div>
-    					</div>
-    				</div>
-    			</div>
-    			<div class="col-md-6 col-lg-3 ftco-animate">
-    				<div class="product">
-    					<a href="#" class="img-prod"><img class="img-fluid" src="images/product-6.jpg" alt="fourbic Template">
-    						<div class="overlay"></div>
-    					</a>
-    					<div class="text py-3 pb-4 px-3 text-center">
-    						<h3><a href="#">Brocolli</a></h3>
-    						<div class="d-flex">
-    							<div class="pricing">
-		    						<p class="price"><span>1kg / ₹40.00</span></p>
-		    					</div>
-	    					</div>
-    						<div class="bottom-area d-flex px-3">
-	    						<div class="m-auto d-flex">
-	    							<a href="#" class="add-to-cart d-flex justify-content-center align-items-center text-center">
-	    								<span><i class="ion-ios-menu"></i></span>
-	    							</a>
-	    							<a href="#" class="buy-now d-flex justify-content-center align-items-center mx-1">
-	    								<span><i class="ion-ios-cart"></i></span>
-	    							</a>
-	    							<a href="#" class="heart d-flex justify-content-center align-items-center ">
-	    								<span><i class="ion-ios-heart"></i></span>
-	    							</a>
-    							</div>
-    						</div>
-    					</div>
-    				</div>
-    			</div>
-    			<div class="col-md-6 col-lg-3 ftco-animate">
-    				<div class="product">
-    					<a href="#" class="img-prod"><img class="img-fluid" src="images/product-7.jpg" alt="fourbic Template">
-	    					<div class="overlay"></div>
-	    				</a>
-    					<div class="text py-3 pb-4 px-3 text-center">
-    						<h3><a href="#">Carrots</a></h3>
-    						<div class="d-flex">
-    							<div class="pricing">
-		    						<p class="price"><span>1kg / ₹38.00</span></p>
-		    					</div>
-	    					</div>
-    						<div class="bottom-area d-flex px-3">
-	    						<div class="m-auto d-flex">
-	    							<a href="#" class="add-to-cart d-flex justify-content-center align-items-center text-center">
-	    								<span><i class="ion-ios-menu"></i></span>
-	    							</a>
-	    							<a href="#" class="buy-now d-flex justify-content-center align-items-center mx-1">
-	    								<span><i class="ion-ios-cart"></i></span>
-	    							</a>
-	    							<a href="#" class="heart d-flex justify-content-center align-items-center ">
-	    								<span><i class="ion-ios-heart"></i></span>
-	    							</a>
-    							</div>
-    						</div>
-    					</div>
-    				</div>
-    			</div>
-    			<div class="col-md-6 col-lg-3 ftco-animate">
-    				<div class="product">
-    					<a href="#" class="img-prod"><img class="img-fluid" src="images/product-8.jpg" alt="fourbic Template">
-    						<div class="overlay"></div>
-    					</a>
-    					<div class="text py-3 pb-4 px-3 text-center">
-    						<h3><a href="#">Bottled Juices</a></h3>
-    						<div class="d-flex">
-    							<div class="pricing">
-		    						<p class="price"><span>Per Bottle / ₹20.00</span></p>
-		    					</div>
-	    					</div>
-    						<div class="bottom-area d-flex px-3">
-	    						<div class="m-auto d-flex">
-	    							<a href="#" class="add-to-cart d-flex justify-content-center align-items-center text-center">
-	    								<span><i class="ion-ios-menu"></i></span>
-	    							</a>
-	    							<a href="#" class="buy-now d-flex justify-content-center align-items-center mx-1">
-	    								<span><i class="ion-ios-cart"></i></span>
-	    							</a>
-	    							<a href="#" class="heart d-flex justify-content-center align-items-center ">
-	    								<span><i class="ion-ios-heart"></i></span>
-	    							</a>
-    							</div>
-    						</div>
-    					</div>
-    				</div>
-    			</div>
-    		</div>
-    	</div>
-    </section>
-<section id="price-comparison">
+    <section id="price-comparison">
         <h2>Our Price vs. Market Price</h2>
         <table>
             <thead>
@@ -499,244 +510,127 @@
             </tbody>
         </table>
     </section>
-		<section class="ftco-section img" style="background-image: url(images/bg_3.jpg);">
-    	<div class="container">
-				<div class="row justify-content-end">
-          <div class="col-md-6 heading-section ftco-animate deal-of-the-day ftco-animate">
-          	<span class="subheading">Best Price For You</span>
-            <h2 class="mb-4">Deal of the day</h2>
-            <p>Grab the deal and place the orders now..!</p>
-            <h3><a href="#">Spinach</a></h3>
-            <span class="price">₹23 <a href="#">now ₹14 only</a></span>
-            <div id="timer" class="d-flex mt-5">
-						  <div class="time" id="days"></div>
-						  <div class="time pl-3" id="hours"></div>
-						  <div class="time pl-3" id="minutes"></div>
-						  <div class="time pl-3" id="seconds"></div>
-						</div>
-          </div>
+
+    <section id="partner">
+        <div class="partner-heading">
+            <h3>Our Trusted Accomplice</h3>
         </div>
-    	</div>
+        <div class="logo-container">
+            <img src="images/logo2.png" alt="logo">
+            <img src="images/logo1.png" alt="logo">
+            <img src="images/logo3.png" alt="logo">
+            <img src="images/logo4.jpg" alt="logo">
+        </div>
     </section>
-
-    <section class="ftco-section testimony-section">
-      <div class="container">
-        <div class="row justify-content-center mb-5 pb-3">
-          <div class="col-md-7 heading-section ftco-animate text-center">
-          	<span class="subheading">Voices of Trust</span>
-            <h2 class="mb-4">We follow the words of leads</h2>
-            <p></p>
-          </div>
+    <section id="download-app">
+        <div class="app-img">
+            <img src="images/mobile-app.png" alt="app">
         </div>
-        <div class="row ftco-animate">
-          <div class="col-md-12">
-            <div class="carousel-testimony owl-carousel">
-              <div class="item">
-                <div class="testimony-wrap p-4 pb-5">
-                  <div class="user-img mb-5" style="background-image: url(images/bharathiyar\ logo.jpg)">
-                    <span class="quote d-flex align-items-center justify-content-center">
-                      <i class="icon-quote-left"></i>
-                    </span>
-                  </div>
-                  <div class="text text-center">
-                    <p class="mb-5 pl-4 line">"When food, body, and knowledge are in harmony, life becomes prosperous".
-				While not directly about vegetables, this quote emphasises the importance of balanced food, which is integral to our health and well-being.</p>
-                    <p class="name">Bharathiyar</p>
-                    <span class="position">Indian Writer</span>
-                  </div>
-                </div>
-              </div>
-              <div class="item">
-                <div class="testimony-wrap p-4 pb-5">
-                  <div class="user-img mb-5" style="background-image: url(images/Avvaiyar-.png)">
-                    <span class="quote d-flex align-items-center justify-content-center">
-                      <i class="icon-quote-left"></i>
-                    </span>
-                  </div>
-                  <div class="text text-center">
-                    <p class="mb-5 pl-4 line">"Food itself gives the body health". Avvaiyar's wisdom in her poems often emphasies the importance of food and its role in sustaining life and health,
-						which could easily include vegetables.
-					</p>
-                    <p class="name">Avvaiyar</p>
-                    <span class="position">Sangam Poet</span>
-                  </div>
-                </div>
-              </div>
-              <div class="item">
-                <div class="testimony-wrap p-4 pb-5">
-                  <div class="user-img mb-5" style="background-image: url(images/kannadasan.jpg)">
-                    <span class="quote d-flex align-items-center justify-content-center">
-                      <i class="icon-quote-left"></i>
-                    </span>
-                  </div>
-                  <div class="text text-center">
-                    <p class="mb-5 pl-4 line">"The right amount of food give us life". 
-						This could be interpreted as a message about importance of moderation and the nourishment that comes from whloesome foods, such as vegetables.</p>
-                    <p class="name">Kannadaasan</p>
-                    <span class="position">Poet</span>
-                  </div>
-                </div>
-              </div>
-              
-              <div class="item">
-                <div class="testimony-wrap p-4 pb-5">
-                  <div class="user-img mb-5" style="background-image: url(images/vairamuthu\ logo.jpg)">
-                    <span class="quote d-flex align-items-center justify-content-center">
-                      <i class="icon-quote-left"></i>
-                    </span>
-                  </div>
-                  <div class="text text-center">
-                    <p class="mb-5 pl-4 line">"The vegetables given by the earth protect our bodies". Vairamuthu's works often reflect the connection between nature and human health,
-						underscoring the importance of simple foods like vegetable's for maintaining health. </p>
-                    <p class="name">Vairamuthu</p>
-                    <span class="position">Tamil Industry Poet</span>
-                  </div>
-                </div>
-              </div>
+        <div class="download-app-text">
+            <strong style="color: #0dd134;">Download App</strong>
+            <p>
+                <b>We have everything from fresh fruits and vegetables to frozen foods. Shopping made easy. Buy Groceries now.</b>
+            </p>
+            <div class="download-btns">
+                <a href="#">
+                    <img src="images/appstore-btn.png" alt="">
+                </a>
+                <a href="#">
+                    <img src="images/googleplay-btn.png" alt="">
+                </a>
             </div>
-          </div>
         </div>
-      </div>
     </section>
-
-    <hr>
-
-		<section class="ftco-section ftco-partner">
-    	<div class="container">
-    		<div class="row">
-    			<div class="col-sm ftco-animate">
-    				<a href="#" class="partner"><img src="images/partner-1.png" class="img-fluid" alt="fourbic Template"></a>
-    			</div>
-    			<div class="col-sm ftco-animate">
-    				<a href="#" class="partner"><img src="images/partner-2.png" class="img-fluid" alt="fourbic Template"></a>
-    			</div>
-    			<div class="col-sm ftco-animate">
-    				<a href="#" class="partner"><img src="images/partner-3.png" class="img-fluid" alt="fourbic Template"></a>
-    			</div>
-    			<div class="col-sm ftco-animate">
-    				<a href="#" class="partner"><img src="images/partner-4.png" class="img-fluid" alt="fourbic Template"></a>
-    			</div>
-    			<div class="col-sm ftco-animate">
-    				<a href="#" class="partner"><img src="images/partner-5.png" class="img-fluid" alt="fourbic Template"></a>
-    			</div>
-    		</div>
-    	</div>
-    </section>
-
-		<section class="ftco-section ftco-no-pt ftco-no-pb py-5 bg-light">
-      <div class="container py-4">
-        <div class="row d-flex justify-content-center py-5">
-          <div class="col-md-6">
-          	<h2 style="font-size: 22px;" class="mb-0">Subcribe to our Newsletter</h2>
-          	<span>Get e-mail updates about our latest shops and special offers</span>
-          </div>
-          <div class="col-md-6 d-flex align-items-center">
-            <form action="#" class="subscribe-form">
-              <div class="form-group d-flex">
-                <input type="text" class="form-control" placeholder="Enter email address">
-                <input type="submit" value="Subscribe" class="submit px-3">
-              </div>
-            </form>
-          </div>
+    <footer>
+        <div class="footer-container">
+            <div class="footer-logo">
+                <a href="#"><span>e</span>Fresh</a>
+                <div class="footer-social">
+                    <a href="#">
+                        <i class="fa-brands fa-facebook" style="color: #3a87fe;"></i>
+                        <i class="fa-brands fa-instagram" style="color: #e1306c;"></i>
+                        <i class="fa-brands fa-twitter" style="color: #11d6cc;"></i>
+                        <i class="fa-brands fa-youtube" style="color: #ff0800;"></i>
+                    </a>
+                </div>
+            </div>
+            <div class="footer-links">
+                <strong>Product</strong>
+                <ul>
+                    <li>
+                        <a href="#">Clothes</a>
+                    </li>
+                    <li>
+                        <a href="#">Packages</a>
+                    </li>
+                    <li>
+                        <a href="#">Popular</a>
+                    </li>
+                    <li>
+                        <a href="#">New</a>
+                    </li>
+                </ul>
+            </div>
+            <div class="footer-links">
+                <strong>Category</strong>
+                <ul>
+                    <li>
+                        <a href="#">Vegetables</a>
+                    </li>
+                    <li>
+                        <a href="#">Fruits</a>
+                    </li>
+                    <li>
+                        <a href="#">Groceries</a>
+                    </li>
+                    <li>
+                        <a href="#">Organic</a>
+                    </li>
+                </ul>
+            </div>
+            <div class="footer-links">
+                <strong>Contact</strong>
+                <ul>
+                    <li>
+                        <a href="#">Phone: +(91) 88259 35176</a>
+                    </li>
+                    <li>
+                        <a href="#">Email: hello@e-farmpick.in</a>
+                    </li>
+                </ul>
+            </div>
         </div>
-      </div>
-    </section>
-    <footer class="ftco-footer ftco-section">
-      <div class="container">
-      	<div class="row">
-      		<div class="mouse">
-						<a href="#" class="mouse-icon">
-							<div class="mouse-wheel"><span class="ion-ios-arrow-up"></span></div>
-						</a>
-					</div>
-      	</div>
-        <div class="row mb-5">
-          <div class="col-md">
-            <div class="ftco-footer-widget mb-4">
-              <h2 class="ftco-heading-2">🌿 Farm Pick</h2>
-              <p>Eat clean and green. Eat Organic Food filled with the essence of Nature</p>
-              <ul class="ftco-footer-social list-unstyled float-md-left float-lft mt-5">
-                <li class="ftco-animate"><a href="#"><span class="icon-twitter"></span></a></li>
-                <li class="ftco-animate"><a href="#"><span class="icon-facebook"></span></a></li>
-                <li class="ftco-animate"><a href="#"><span class="icon-instagram"></span></a></li>
-              </ul>
-            </div>
-          </div>
-          <div class="col-md">
-            <div class="ftco-footer-widget mb-4 ml-md-5">
-              <h2 class="ftco-heading-2">Menu</h2>
-              <ul class="list-unstyled">
-                <li><a href="#" class="py-2 d-block">Shop</a></li>
-                <li><a href="#" class="py-2 d-block">About</a></li>
-                <li><a href="#" class="py-2 d-block">Categories</a></li>
-                <li><a href="#" class="py-2 d-block">Contact Us</a></li>
-              </ul>
-            </div>
-          </div>
-          <div class="col-md-4">
-             <div class="ftco-footer-widget mb-4">
-              <h2 class="ftco-heading-2">Help</h2>
-              <div class="d-flex">
-	              <ul class="list-unstyled mr-l-5 pr-l-3 mr-4">
-	                <li><a href="#" class="py-2 d-block">Shipping Information</a></li>
-	                <li><a href="#" class="py-2 d-block">Enquire &amp; Queryies</a></li>
-	                <li><a href="#" class="py-2 d-block">Terms &amp; Conditions</a></li>
-	                <li><a href="#" class="py-2 d-block">Privacy Policy</a></li>
-	              </ul>
-	              <ul class="list-unstyled">
-	                <li><a href="#" class="py-2 d-block">FAQs</a></li>
-	                <li><a href="#" class="py-2 d-block">Contact</a></li>
-	              </ul>
-	            </div>
-            </div>
-          </div>
-          <div class="col-md">
-            <div class="ftco-footer-widget mb-4">
-            	<h2 class="ftco-heading-2">Have a Questions?</h2>
-            	<div class="block-23 mb-3">
-	              <ul>
-	                <li><span class="icon icon-map-marker"></span><span class="text">FarmPick, Malumichampatti</span></li>
-	                <li><a href="#"><span class="icon icon-phone"></span><span class="text">+91 88259 35176</span></a></li>
-	                <li><a href="#"><span class="icon icon-envelope"></span><span class="text">hello@e-farmpick.in</span></a></li>
-	              </ul>
-	            </div>
-            </div>
-          </div>
-        </div>
-        <div class="row">
-          <div class="col-md-12 text-center">
-
-            <p><!-- Link back to fourbic can't be removed. Template is licensed under CC BY 3.0. -->
-						  Copyright &copy;<script>document.write(new Date().getFullYear());</script> All rights reserved  by <a href="https://fourbic.com" target="_blank">AjithKumar S</a>
-						  <!-- Link back to fourbic can't be removed. Template is licensed under CC BY 3.0. -->
-						</p>
-          </div>
-        </div>
-      </div>
     </footer>
 
+    <script>
+        // Auto-scroll for the customer reviews section
+        const reviewContainer = document.querySelector('.review-container');
+        let scrollInterval;
 
+        function startAutoScroll() {
+            scrollInterval = setInterval(() => {
+                // Scroll by the width of one card + gap
+                const scrollAmount = 320 + 25; // Card width + gap
+                reviewContainer.scrollLeft += scrollAmount;
 
-  <!-- loader -->
-  <div id="ftco-loader" class="show fullscreen"><svg class="circular" width="48px" height="48px"><circle class="path-bg" cx="24" cy="24" r="22" fill="none" stroke-width="4" stroke="#eeeeee"/><circle class="path" cx="24" cy="24" r="22" fill="none" stroke-width="4" stroke-miterlimit="10" stroke="#F96D00"/></svg></div>
+                // If scrolled to the end, reset to the beginning
+                if (reviewContainer.scrollLeft + reviewContainer.clientWidth >= reviewContainer.scrollWidth - 10) { // -10 for a small buffer
+                    reviewContainer.scrollLeft = 0;
+                }
+            }, 3000); // Change review every 3 seconds (adjust as needed)
+        }
 
+        function stopAutoScroll() {
+            clearInterval(scrollInterval);
+        }
 
-  <script src="js/jquery.min.js"></script>
-  <script src="js/jquery-migrate-3.0.1.min.js"></script>
-  <script src="js/popper.min.js"></script>
-  <script src="js/bootstrap.min.js"></script>
-  <script src="js/jquery.easing.1.3.js"></script>
-  <script src="js/jquery.waypoints.min.js"></script>
-  <script src="js/jquery.stellar.min.js"></script>
-  <script src="js/owl.carousel.min.js"></script>
-  <script src="js/jquery.magnific-popup.min.js"></script>
-  <script src="js/aos.js"></script>
-  <script src="js/jquery.animateNumber.min.js"></script>
-  <script src="js/bootstrap-datepicker.js"></script>
-  <script src="js/scrollax.min.js"></script>
-  <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyBVWaKrjvy3MaE7SQ74_uJiULgl1JY0H2s&sensor=false"></script>
-  <script src="js/google-map.js"></script>
-  <script src="js/main.js"></script>
+        // Start auto-scroll when the page loads
+        document.addEventListener('DOMContentLoaded', startAutoScroll);
 
-  </body>
+        // Optional: Pause scroll on hover
+        reviewContainer.addEventListener('mouseenter', stopAutoScroll);
+        reviewContainer.addEventListener('mouseleave', startAutoScroll);
+    </script>
+</body>
+
 </html>
