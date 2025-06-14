@@ -16,35 +16,34 @@
 
     body, html {
       height: 100%;
-      /* Use Poppins from Google Fonts if not already linked globally */
       font-family: 'Poppins', sans-serif;
-      background-color: #f4f6f8; /* Light background for the loader screen */
-      display: flex; /* Enables flexbox for centering */
-      align-items: center; /* Centers content vertically */
-      justify-content: center; /* Centers content horizontally */
+      background-color: #f4f6f8;
+      display: flex;
+      align-items: center;
+      justify-content: center;
     }
 
     .loader-container {
-      text-align: center; /* Ensures the logo text and spinner are centered within the container */
-      padding: 20px; /* Add a little padding for smaller screens if needed */
+      text-align: center;
+      padding: 20px; /* Default padding */
     }
 
     .logo {
-      font-size: 2.5rem; /* Default font size for laptops */
+      font-size: 2.5rem;
       font-weight: 600;
-      color: #388E3C; /* A pleasant green color */
-      margin-bottom: 20px; /* Space between logo and spinner */
-      white-space: nowrap; /* Prevent logo from wrapping on small screens */
+      color: #388E3C;
+      margin-bottom: 20px;
+      white-space: nowrap;
     }
 
     .spinner {
-      width: 50px; /* Default spinner size */
+      width: 50px;
       height: 50px;
-      border: 6px solid #ccc; /* Light grey border */
-      border-top: 6px solid #4CAF50; /* Green top border for animation effect */
+      border: 6px solid #ccc;
+      border-top: 6px solid #4CAF50;
       border-radius: 50%;
-      animation: spin 1s linear infinite; /* Spin animation */
-      margin: auto; /* Helps ensure it's truly centered if it's a block element */
+      animation: spin 1s linear infinite;
+      margin: auto;
     }
 
     @keyframes spin {
@@ -52,20 +51,48 @@
     }
 
     /* --- Responsive Adjustments --- */
+
+    /* For screens up to 600px wide (e.g., larger phones, small tablets) */
     @media (max-width: 600px) {
       .logo {
-        font-size: 2rem; /* Slightly smaller font size for mobile screens */
+        font-size: 2rem; /* Slightly smaller font size */
       }
       .spinner {
-        width: 40px; /* Slightly smaller spinner on mobile */
+        width: 40px;
         height: 40px;
-        border-width: 5px; /* Adjust border thickness */
+        border-width: 5px;
       }
     }
 
+    /* For screens up to 400px wide (e.g., most mobile phones) */
     @media (max-width: 400px) {
+      .loader-container {
+        padding: 15px; /* Reduce padding to save vertical space */
+      }
       .logo {
-        font-size: 1.6rem; /* Even smaller font size for very small phones */
+        font-size: 1.5rem; /* Smaller font size */
+        margin-bottom: 15px; /* Reduce space below logo */
+      }
+      .spinner {
+        width: 35px; /* Smaller spinner */
+        height: 35px;
+        border-width: 4px;
+      }
+    }
+
+    /* For screens up to 320px wide (e.g., very small mobile phones like iPhone SE 1st gen) */
+    @media (max-width: 320px) {
+      .loader-container {
+        padding: 10px; /* Further reduce padding */
+      }
+      .logo {
+        font-size: 1.3rem; /* Even smaller font size */
+        margin-bottom: 10px; /* Further reduce space below logo */
+      }
+      .spinner {
+        width: 30px; /* Smallest spinner size */
+        height: 30px;
+        border-width: 3px;
       }
     }
   </style>
