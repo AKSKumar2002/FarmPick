@@ -1,0 +1,805 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Farm Pick</title>
+    <link rel="stylesheet" type="text/css" href="css/style.css" />
+    <link rel="shortcut icon" href="images/favicon.png" />
+    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v6.1.0/css/all.css"
+        integrity="sha384-eLT4eRYPHTmTsFGFAzjcCWX+wHfUInVWNm9YnwpiatljsZOwXtwV2Hh6sHM6zZD9" crossorigin="anonymous" />
+
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:ital,wght@0,100;0,200;0,300;0,400;0,500;0,
+        600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap"
+        rel="stylesheet">
+
+    <style>
+        /* --- Styles for the New Sections --- */
+
+        /* Customer Reviews Section */
+        #customer-reviews {
+            padding: 40px 20px;
+            text-align: center;
+            background-color: #f9f9f9;
+        }
+
+        #customer-reviews h2 {
+            font-size: 2em;
+            margin-bottom: 30px;
+            color: #333;
+        }
+
+        .review-container {
+            display: flex;
+            overflow-x: auto;
+            /* Enables horizontal scrolling */
+            scroll-behavior: smooth;
+            /* Smooth scroll effect */
+            gap: 25px;
+            /* Space between review cards */
+            padding: 20px 0;
+            margin-top: 20px;
+            -webkit-overflow-scrolling: touch;
+            /* For smoother scrolling on iOS */
+            /* Hide scrollbar for aesthetic purposes */
+            scrollbar-width: none;
+            /* Firefox */
+            -ms-overflow-style: none;
+            /* IE and Edge */
+        }
+
+        .review-container::-webkit-scrollbar {
+            display: none;
+            /* Chrome, Safari, Opera */
+        }
+
+        .review-card {
+            flex: 0 0 320px;
+            /* Fixed width, no shrinking/growing */
+            background-color: #fff;
+            border: 1px solid #e0e0e0;
+            padding: 25px;
+            border-radius: 10px;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            text-align: center;
+            transition: transform 0.3s ease-in-out;
+        }
+
+        .review-card:hover {
+            transform: translateY(-5px);
+        }
+
+        .review-card img {
+            width: 70px;
+            height: 70px;
+            border-radius: 50%;
+            object-fit: cover;
+            margin-bottom: 15px;
+            border: 3px solid #0dd134;
+        }
+
+        .review-card strong {
+            font-size: 1.2em;
+            color: #222;
+            margin-bottom: 5px;
+        }
+
+        .review-card .rating {
+            color: gold;
+            margin-bottom: 15px;
+            font-size: 1.1em;
+        }
+
+        .review-card p {
+            font-size: 0.95em;
+            color: #555;
+            line-height: 1.6;
+        }
+
+        /* Price Comparison Section */
+        #price-comparison {
+            padding: 40px 20px;
+            text-align: center;
+            background-color: #fff;
+        }
+
+        #price-comparison h2 {
+            font-size: 2em;
+            margin-bottom: 30px;
+            color: #333;
+        }
+
+        #price-comparison table {
+            width: 90%;
+            max-width: 800px;
+            margin: 20px auto;
+            border-collapse: collapse;
+            border: 1px solid #ddd;
+            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.05);
+        }
+
+        #price-comparison th,
+        #price-comparison td {
+            border: 1px solid #eee;
+            padding: 12px 15px;
+            text-align: left;
+            font-size: 1em;
+        }
+
+        #price-comparison th {
+            background-color: #f2f2f2;
+            font-weight: 600;
+            color: #333;
+        }
+
+        #price-comparison tr:nth-child(even) {
+            background-color: #f8f8f8;
+        }
+
+        #price-comparison tr:hover {
+            background-color: #f1f1f1;
+        }
+
+        /* Specific styling for savings column */
+        #price-comparison td:last-child {
+            font-weight: bold;
+            color: #0dd134;
+        }
+
+        /* --- Existing Styles (if any) and other sections --- */
+        /* You might have existing styles in style.css. Ensure there are no conflicts. */
+
+        /* General heading style (if not already defined in style.css) */
+        .section-heading {
+            font-size: 2.2em;
+            color: #333;
+            text-align: center;
+            margin-bottom: 40px;
+            position: relative;
+        }
+
+        .section-heading::after {
+            content: '';
+            width: 70px;
+            height: 4px;
+            background-color: #0dd134;
+            display: block;
+            margin: 10px auto 0;
+            border-radius: 2px;
+        }
+
+        /* Styles for the Location Pop-up Modal */
+        .popup-overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0, 0, 0, 0.7); /* Dark semi-transparent background */
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            z-index: 1000; /* Ensure it's on top of everything */
+            transition: opacity 0.3s ease-in-out;
+            opacity: 0;
+            visibility: hidden;
+        }
+
+        .popup-overlay.active {
+            opacity: 1;
+            visibility: visible;
+        }
+
+        .location-popup {
+            background-color: #ffffff;
+            padding: 40px;
+            border-radius: 12px;
+            box-shadow: 0 8px 30px rgba(0, 0, 0, 0.2);
+            text-align: center;
+            max-width: 450px;
+            width: 90%;
+            transform: scale(0.95);
+            transition: transform 0.3s ease-in-out;
+        }
+
+        .popup-overlay.active .location-popup {
+            transform: scale(1);
+        }
+
+        .location-popup h2 {
+            font-size: 2.2em;
+            margin-bottom: 15px;
+            color: #0dd134; /* Green accent */
+        }
+
+        .location-popup p {
+            font-size: 1.05em;
+            margin-bottom: 25px;
+            color: #555;
+            line-height: 1.6;
+        }
+
+        .location-form {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 20px;
+        }
+
+        .location-form select {
+            padding: 12px 20px;
+            border: 2px solid #0dd134;
+            border-radius: 8px;
+            font-size: 1.1em;
+            color: #333;
+            background-color: #fff;
+            width: 100%;
+            max-width: 300px;
+            appearance: none;
+            /* Remove default select arrow */
+            -webkit-appearance: none;
+            -moz-appearance: none;
+            background-image: url('data:image/svg+xml;charset=US-ASCII,%3Csvg%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%20width%3D%22292.4%22%20height%3D%22292.4%22%3E%3Cpath%20fill%3D%22%230dd134%22%20d%3D%22M287%2C197.3L159.5%2C69.8c-4.4-4.4-11.4-4.4-15.8%2C0L5.4%2C197.3c-4.4%2C4.4-4.4%2C11.4%2C0%2C15.8c4.4%2C4.4%2C11.4%2C4.4%2C15.8%2C0L151.6%2C93.4l129.8%2C129.8c4.4%2C4.4%2C11.4%2C4.4%2C15.8%2C0C291.4%2C208.7%2C291.4%2C201.7%2C287%2C197.3z%22%2F%3E%3C%2Fsvg%3E');
+            background-repeat: no-repeat;
+            background-position: right 15px center;
+            background-size: 12px auto;
+            cursor: pointer;
+            transition: border-color 0.3s ease;
+        }
+
+        .location-form select:focus {
+            outline: none;
+            border-color: #08a32a;
+            /* Darker green on focus */
+        }
+
+        .location-form button {
+            background-color: #0dd134;
+            color: #fff;
+            padding: 12px 30px;
+            border: none;
+            border-radius: 8px;
+            font-size: 1.1em;
+            cursor: pointer;
+            transition: background-color 0.3s ease;
+        }
+
+        .location-form button:hover {
+            background-color: #08a32a;
+        }
+    </style>
+</head>
+
+<body>
+    <div class="popup-overlay" id="locationPopupOverlay">
+        <div class="location-popup" id="locationPopup">
+            <h2 class="section-heading">Welcome to Farm Pick!</h2>
+            <p>Please select your city to see products available for your location and enjoy fresh farm produce delivered to your doorstep.</p>
+            <div class="location-form">
+                <label for="city-select" class="sr-only">Select your city</label>
+                <select id="city-select">
+                    <option value="">Select City</option>
+                    <option value="coimbatore">Coimbatore</option>
+                    <option value="bangalore">Bangalore</option>
+                    <option value="chennai">Chennai</option>
+                    <option value="kochi">Kochi</option>
+                </select>
+                <button id="set-location-btn">Set Location</button>
+            </div>
+        </div>
+    </div>
+    <nav class="navigation">
+        <a href="index.html" class="logo">
+            <span>🌿 Farm</span>Pick
+        </a>
+        <input type="checkbox" class="menu-btn" id="menu-btn">
+        <label for="menu-btn" class="menu-icon">
+            <span class="nav-icon"></span>
+        </label>
+        <ul class="menu">
+            <li><a href="index.html" class="active">Home</a></li>
+            <li><a href="#category">Shop</a></li>
+            <li><a href="/about us.html">About</a></li>
+            <li><a href="/contact us.html">Contact US</a></li>
+        </ul>
+        <div class="right-nav">
+            <a href="#" class="like">
+                <i class="far fa-heart"></i>
+                <span>0</span>
+            </a>
+            <a href="#" class="cart">
+                <i class="fa fa-shopping-cart"></i>
+                <span>0</span>
+            </a>
+        </div>
+    </nav>
+    <section id="search-banner">
+        <img src="images/tomato.png" class="bg-1" alt="bg">
+        <img src="images/salad.png" class="bg-2" alt="bg-2">
+
+        <div class="search-banner-text">
+            <h1>Order from our Farm for the day</h1>
+            <strong>#Faster Delivery</strong>
+            <form class="search-box" action="">
+                <i class="fas fa-search"></i>
+                <input type="text" class="search-input" placeholder="Search your daily grocery" name="search" required>
+                <input type="submit" class="btn" value="Search">
+            </form>
+        </div>
+    </section>
+
+    <section id="category">
+        <div class="category-heading">
+            <h2>Categories</h2>
+            <span></span>
+        </div>
+        <div class="category-container">
+            <a href="#" class="category-box">
+                <img src="images/gardening.png" alt="Fruits" width="70px" height="70px">
+                <span>Fruits</span>
+            </a>
+            <a href="#" class="category-box">
+                <img src="images/vegetable.png" alt="Vegetables" width="70px" height="70px">
+                <span>Vegetables</span>
+            </a>
+            <a href="#" class="category-box">
+                <img src="images/gardening.png" alt="Organic Items" width="70px" height="70px">
+                <span>Organic Items</span>
+            </a>
+            <a href="#" class="category-box">
+                <img src="images/vegetable.png" alt="Groceries" width="70px" height="70px">
+                <span>Groceries</span>
+            </a>
+            <a href="#" class="category-box">
+                <img src="images/office.png" alt="Business" width="70px" height="70px">
+                <span>Business</span>
+            </a>
+            <a href="#" class="category-box">
+                <img src="images/beauty.png" alt="Fresh Farm" width="70px" height="70px">
+                <span>Fresh Farm</span>
+            </a>
+            <a href="#" class="category-box">
+                <img src="images/gardening.png" alt="Gardening" width="70px" height="70px">
+                <span>Gardening</span>
+            </a>
+        </div>
+    </section>
+    <section id="category">
+        </section>
+
+    <section id="services-banner">
+        <div class="service-container">
+            <div class="service-box">
+                <strong>Free Delivery*</strong>
+                <span>On all orders above ₹500</span>
+            </div>
+            <div class="service-box">
+                <strong>6Hr Shipping*</strong>
+                <span>Delivering across Mumbai & Pune</span>
+            </div>
+            <div class="service-box">
+                <strong>Easy Returns</strong>
+                <span>For items damaged during transit or quality issues</span>
+            </div>
+            <div class="service-box">
+                <strong>All Payment Modes</strong>
+                <span>Cards, UPI, Wallets, Net Banking and COD</span>
+            </div>
+            <div class="service-box">
+                <strong>Customer Support</strong>
+                <span>Between 7am to 10pm, Monday to Saturday</span>
+            </div>
+        </div>
+    </section>
+    <section id="popular-product">
+    </section>
+
+    <section id="popular-product">
+        <div class="product-heading">
+            <h3>Popular Product</h3>
+            <span></span>
+        </div>
+        <div class="product-container">
+            <div class="product-box">
+                <img src="images/onion.jpg" alt="onion">
+                <strong>Onion</strong>
+                <span class="quantity">1 KG</span>
+                <span class="price">₹22</span>
+                <a href="#" class="cart-btn">
+                    <i class="fas fa-shopping-bag"></i> Add to Cart
+                </a>
+                <a href="#" class="like-btn">
+                    <i class="far fa-heart"></i>
+                </a>
+            </div>
+            <div class="product-box">
+                <img src="images/Tomato11.jpg" alt="tomato">
+                <strong>Tomato</strong>
+                <span class="quantity">1 KG</span>
+                <span class="price">₹17</span>
+                <a href="#" class="cart-btn">
+                    <i class="fas fa-shopping-bag"></i> Add to Cart
+                </a>
+                <a href="#" class="like-btn">
+                    <i class="far fa-heart"></i>
+                </a>
+            </div>
+            <div class="product-box">
+                <img src="images/cauliflower.jpg" alt="cauliflower">
+                <strong>Cauliflower</strong>
+                <span class="quantity">1 KG</span>
+                <span class="price">₹28</span>
+                <a href="#" class="cart-btn">
+                    <i class="fas fa-shopping-bag"></i> Add to Cart
+                </a>
+                <a href="#" class="like-btn">
+                    <i class="far fa-heart"></i>
+                </a>
+            </div>
+            <div class="product-box">
+                <img src="images/gchilli.jpg" alt="green chilli">
+                <strong>Green Chilli</strong>
+                <span class="quantity">1 KG</span>
+                <span class="price">₹40</span>
+                <a href="#" class="cart-btn">
+                    <i class="fas fa-shopping-bag"></i> Add to Cart
+                </a>
+                <a href="#" class="like-btn">
+                    <i class="far fa-heart"></i>
+                </a>
+            </div>
+            <div class="product-box">
+                <img src="images/potato.jpg" alt="potato">
+                <strong>Potato</strong>
+                <span class="quantity">1 KG</span>
+                <span class="price">₹30</span>
+                <a href="#" class="cart-btn">
+                    <i class="fas fa-shopping-bag"></i> Add to Cart
+                </a>
+                <a href="#" class="like-btn">
+                    <i class="far fa-heart"></i>
+                </a>
+            </div>
+            <div class="product-box">
+                <img src="images/lemon.jpg" alt="lemon">
+                <strong>Lemon</strong>
+                <span class="quantity">500 G</span>
+                <span class="price">₹26</span>
+                <a href="#" class="cart-btn">
+                    <i class="fas fa-shopping-bag"></i> Add to Cart
+                </a>
+                <a href="#" class="like-btn">
+                    <i class="far fa-heart"></i>
+                </a>
+            </div>
+            <div class="product-box">
+                <img src="images/carrot.jpg" alt="carrot">
+                <strong>Carrot</strong>
+                <span class="quantity">1 KG</span>
+                <span class="price">₹35</span>
+                <a href="#" class="cart-btn">
+                    <i class="fas fa-shopping-bag"></i> Add to Cart
+                </a>
+                <a href="#" class="like-btn">
+                    <i class="far fa-heart"></i>
+                </a>
+            </div>
+            <div class="product-box">
+                <img src="images/raddish.jpg" alt="radish">
+                <strong>Radish</strong>
+                <span class="quantity">1 KG</span>
+                <span class="price">₹28</span>
+                <a href="#" class="cart-btn">
+                    <i class="fas fa-shopping-bag"></i> Add to Cart
+                </a>
+                <a href="#" class="like-btn">
+                    <i class="far fa-heart"></i>
+                </a>
+            </div>
+            <div class="product-box">
+                <img src="images/Brinjal.jpg" alt="brinjal">
+                <strong>Brinjal</strong>
+                <span class="quantity">1 KG</span>
+                <span class="price">₹37</span>
+                <a href="#" class="cart-btn">
+                    <i class="fas fa-shopping-bag"></i> Add to Cart
+                </a>
+                <a href="#" class="like-btn">
+                    <i class="far fa-heart"></i>
+                </a>
+            </div>
+        </div>
+    </section>
+    <section id="popular-bundle-pack">
+        <div class="product-heading">
+            <h3>Popular Bundle Pack</h3>
+        </div>
+        <div class="product-container">
+            <div class="product-box">
+                <img src="images/pack.jpg" alt="pack">
+                <strong>Huge Pack</strong>
+                <span class="quantity">Apple, Tomato, Potato, +4</span>
+                <span class="price">₹600</span>
+                <a href="#" class="cart-btn">
+                    <i class="fas fa-shopping-bag"></i> Add to Cart
+                </a>
+                <a href="#" class="like-btn">
+                    <i class="far fa-heart"></i>
+                </a>
+            </div>
+            <div class="product-box">
+                <img src="images/large.jpg" alt="large">
+                <strong>Large Pack</strong>
+                <span class="quantity">Potato, Carrot, +3</span>
+                <span class="price">₹350</span>
+                <a href="#" class="cart-btn">
+                    <i class="fas fa-shopping-bag"></i> Add to Cart
+                </a>
+                <a href="#" class="like-btn">
+                    <i class="far fa-heart"></i>
+                </a>
+            </div>
+            <div class="product-box">
+                <img src="images/small.jpg" alt="small">
+                <strong>Small Pack</strong>
+                <span class="quantity">Orange, Potato, +2</span>
+                <span class="price">₹220</span>
+                <a href="#" class="cart-btn">
+                    <i class="fas fa-shopping-bag"></i> Add to Cart
+                </a>
+                <a href="#" class="like-btn">
+                    <i class="far fa-heart"></i>
+                </a>
+            </div>
+        </div>
+    </section>
+
+        <section id="price-comparison">
+        <h2>Our Price vs. Market Price</h2>
+        <table>
+            <thead>
+                <tr>
+                    <th>Product</th>
+                    <th>Market Price (₹/KG)</th>
+                    <th>Our Price (₹/KG)</th>
+                    <th>Savings (₹/KG)</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td>Onion</td>
+                    <td>25</td>
+                    <td>22</td>
+                    <td><i class="fas fa-rupee-sign"></i> 3</td>
+                </tr>
+                <tr>
+                    <td>Tomato</td>
+                    <td>20</td>
+                    <td>17</td>
+                    <td><i class="fas fa-rupee-sign"></i> 3</td>
+                </tr>
+                <tr>
+                    <td>Potato</td>
+                    <td>35</td>
+                    <td>30</td>
+                    <td><i class="fas fa-rupee-sign"></i> 5</td>
+                </tr>
+                <tr>
+                    <td>Carrot</td>
+                    <td>40</td>
+                    <td>35</td>
+                    <td><i class="fas fa-rupee-sign"></i> 5</td>
+                </tr>
+                <tr>
+                    <td>Lemon (500g)</td>
+                    <td>30</td>
+                    <td>26</td>
+                    <td><i class="fas fa-rupee-sign"></i> 4</td>
+                </tr>
+            </tbody>
+        </table>
+    </section>
+
+    <section id="customer-reviews">
+        <h2>Voices of Trust</h2>
+        <div class="review-container">
+            <div class="review-card">
+                <img src="images/Avvaiyar-.png" alt="Customer 1">
+                <strong>Auvaiyar</strong>
+                <p>"Food itself gives the body health". Avvaiyar's wisdom in her poems often emphasies the importance of food and its role in sustaining life and health,
+						which could easily include vegetables.</p>
+            </div>
+            <div class="review-card">
+                <img src="images/kannadasan.jpg" alt="Customer 2">
+                <strong>Kannadasan</strong>
+                <p>"The right amount of food give us life".
+						This could be interpreted as a message about importance of moderation and the nourishment that comes from whloesome foods, such as vegetables.</p>
+            </div>
+            <div class="review-card">
+                <img src="images/bharathiyar logo.jpg" alt="Customer 3">
+                <strong>Bharathiyar</strong>
+                <p>"When food, body, and knowledge are in harmony, life becomes prosperous".
+				While not directly about vegetables, this quote emphasises the importance of balanced food, which is integral to our health and well-being.</p>
+            </div>
+            <div class="review-card">
+                <img src="images/vairamuthu logo.jpg" alt="Customer 4">
+                <strong>vairamuthu</strong>
+                <p>"The vegetables given by the earth protect our bodies". Vairamuthu's works often reflect the connection between nature and human health,
+						underscoring the importance of simple foods like vegetable's for maintaining health. </p>
+            </div>
+            <div class="review-card">
+                <img src="images/ambethkar logo.jpg" alt="Customer 5">
+                <strong>Ambethkar</strong>
+                <p>“Food must be free from untouchability, inequality, and injustice. Access to fresh, clean food is a right, not a privilege.”</p>
+            </div>
+            <div class="review-card">
+                <img src="images/vivekanandha.jpg" alt="Customer 6">
+                <strong>Vivekanandha</strong>
+                <p>“Purity, patience, and perseverance are the three essentials to success, and above all, love.”
+– Though not about food directly, Vivekananda often linked purity of diet with purity of thought.</p>
+            </div>
+        </div>
+    </section>
+
+    <section id="partner">
+        <div class="partner-heading">
+            <h3>Our Trusted Accomplice</h3>
+        </div>
+        <div class="logo-container">
+            <img src="images/logo2.png" alt="logo">
+            <img src="images/logo1.png" alt="logo">
+            <img src="images/logo3.png" alt="logo">
+            <img src="images/logo4.jpg" alt="logo">
+        </div>
+    </section>
+    <section id="download-app">
+        <div class="app-img">
+            <img src="images/mobile-app.png" alt="app">
+        </div>
+        <div class="download-app-text">
+            <strong style="color: #0dd134;">Download App</strong>
+            <p>
+                <b>We have everything from fresh fruits and vegetables to frozen foods. Shopping made easy. Buy Groceries now.</b>
+            </p>
+            <div class="download-btns">
+                <a href="#">
+                    <img src="images/appstore-btn.png" alt="">
+                </a>
+                <a href="#">
+                    <img src="images/googleplay-btn.png" alt="">
+                </a>
+            </div>
+        </div>
+    </section>
+    <footer>
+        <div class="footer-container">
+            <div class="footer-logo">
+                <a href="#"><span>e</span>Fresh</a>
+                <div class="footer-social">
+                    <a href="#">
+                        <i class="fa-brands fa-facebook" style="color: #3a87fe;"></i>
+                        <i class="fa-brands fa-instagram" style="color: #e1306c;"></i>
+                        <i class="fa-brands fa-twitter" style="color: #11d6cc;"></i>
+                        <i class="fa-brands fa-youtube" style="color: #ff0800;"></i>
+                    </a>
+                </div>
+            </div>
+            <div class="footer-links">
+                <strong>Product</strong>
+                <ul>
+                    <li>
+                        <a href="#">Clothes</a>
+                    </li>
+                    <li>
+                        <a href="#">Packages</a>
+                    </li>
+                    <li>
+                        <a href="#">Popular</a>
+                    </li>
+                    <li>
+                        <a href="#">New</a>
+                    </li>
+                </ul>
+            </div>
+            <div class="footer-links">
+                <strong>Category</strong>
+                <ul>
+                    <li>
+                        <a href="#">Vegetables</a>
+                    </li>
+                    <li>
+                        <a href="#">Fruits</a>
+                    </li>
+                    <li>
+                        <a href="#">Groceries</a>
+                    </li>
+                    <li>
+                        <a href="#">Organic</a>
+                    </li>
+                </ul>
+            </div>
+            <div class="footer-links">
+                <strong>Contact</strong>
+                <ul>
+                    <li>
+                        <a href="#">Phone: +(91) 88259 35176</a>
+                    </li>
+                    <li>
+                        <a href="#">Email: hello@e-farmpick.in</a>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </footer>
+
+    <script>
+        // Auto-scroll for the customer reviews section
+        const reviewContainer = document.querySelector('.review-container');
+        let scrollInterval;
+
+        function startAutoScroll() {
+            scrollInterval = setInterval(() => {
+                const scrollAmount = 320 + 25; // Card width + gap
+                reviewContainer.scrollLeft += scrollAmount;
+                if (reviewContainer.scrollLeft + reviewContainer.clientWidth >= reviewContainer.scrollWidth - 10) {
+                    reviewContainer.scrollLeft = 0;
+                }
+            }, 3000);
+        }
+
+        function stopAutoScroll() {
+            clearInterval(scrollInterval);
+        }
+
+        // Start auto-scroll when the page loads
+        document.addEventListener('DOMContentLoaded', startAutoScroll);
+
+        // Optional: Pause scroll on hover
+        reviewContainer.addEventListener('mouseenter', stopAutoScroll);
+        reviewContainer.addEventListener('mouseleave', startAutoScroll);
+
+        // JavaScript for Location Selection Pop-up
+        const locationPopupOverlay = document.getElementById('locationPopupOverlay');
+        const citySelect = document.getElementById('city-select');
+        const setLocationBtn = document.getElementById('set-location-btn');
+
+        // Function to show the pop-up
+        function showLocationPopup() {
+            locationPopupOverlay.classList.add('active');
+            document.body.style.overflow = 'hidden'; // Prevent scrolling background
+        }
+
+        // Function to hide the pop-up
+        function hideLocationPopup() {
+            locationPopupOverlay.classList.remove('active');
+            document.body.style.overflow = ''; // Restore scrolling
+        }
+
+        // Show pop-up every time the page loads
+        document.addEventListener('DOMContentLoaded', showLocationPopup);
+
+        // Event listener for setting the location
+        setLocationBtn.addEventListener('click', () => {
+            const selectedCity = citySelect.value;
+            if (selectedCity) {
+                // Store the selected city in localStorage (optional, but good for other logic)
+                localStorage.setItem('farmpick_selected_city', selectedCity);
+                alert(`You have selected ${selectedCity.charAt(0).toUpperCase() + selectedCity.slice(1)}. Enjoy your shopping!`);
+                hideLocationPopup(); // Hide the pop-up
+                // In a real application, you would now:
+                // 1. Load products specific to this city.
+                // 2. Update UI elements to show the selected city.
+            } else {
+                alert("Please select a city to proceed.");
+            }
+        });
+    </script>
+</body>
+
+</html>
