@@ -18,10 +18,13 @@
       display: flex;
       align-items: center;
       justify-content: center;
+      padding: 20px;
     }
 
     .loader-container {
       text-align: center;
+      width: 100%;
+      max-width: 400px;
     }
 
     .logo {
@@ -38,11 +41,25 @@
       border-top: 6px solid #4CAF50;
       border-radius: 50%;
       animation: spin 1s linear infinite;
-      margin: auto;
+      margin: 0 auto;
     }
 
     @keyframes spin {
       to { transform: rotate(360deg); }
+    }
+
+    /* Mobile Responsive Adjustments */
+    @media (max-width: 480px) {
+      .logo {
+        font-size: 2rem;
+        margin-bottom: 16px;
+      }
+
+      .spinner {
+        width: 40px;
+        height: 40px;
+        border-width: 5px;
+      }
     }
   </style>
 </head>
