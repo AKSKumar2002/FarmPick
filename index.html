@@ -2,8 +2,11 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <title>Farmpick</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Farmpick Loading...</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600&display=swap" rel="stylesheet">
   <style>
     * {
       box-sizing: border-box;
@@ -13,36 +16,57 @@
 
     body, html {
       height: 100%;
+      /* Use Poppins from Google Fonts if not already linked globally */
       font-family: 'Poppins', sans-serif;
-      background-color: #f4f6f8;
-      display: flex;
-      align-items: center;
-      justify-content: center;
+      background-color: #f4f6f8; /* Light background for the loader screen */
+      display: flex; /* Enables flexbox for centering */
+      align-items: center; /* Centers content vertically */
+      justify-content: center; /* Centers content horizontally */
     }
 
     .loader-container {
-      text-align: center;
+      text-align: center; /* Ensures the logo text and spinner are centered within the container */
+      padding: 20px; /* Add a little padding for smaller screens if needed */
     }
 
     .logo {
-      font-size: 2.5rem;
+      font-size: 2.5rem; /* Default font size for laptops */
       font-weight: 600;
-      color: #388E3C;
-      margin-bottom: 20px;
+      color: #388E3C; /* A pleasant green color */
+      margin-bottom: 20px; /* Space between logo and spinner */
+      white-space: nowrap; /* Prevent logo from wrapping on small screens */
     }
 
     .spinner {
-      width: 50px;
+      width: 50px; /* Default spinner size */
       height: 50px;
-      border: 6px solid #ccc;
-      border-top: 6px solid #4CAF50;
+      border: 6px solid #ccc; /* Light grey border */
+      border-top: 6px solid #4CAF50; /* Green top border for animation effect */
       border-radius: 50%;
-      animation: spin 1s linear infinite;
-      margin: auto;
+      animation: spin 1s linear infinite; /* Spin animation */
+      margin: auto; /* Helps ensure it's truly centered if it's a block element */
     }
 
     @keyframes spin {
       to { transform: rotate(360deg); }
+    }
+
+    /* --- Responsive Adjustments --- */
+    @media (max-width: 600px) {
+      .logo {
+        font-size: 2rem; /* Slightly smaller font size for mobile screens */
+      }
+      .spinner {
+        width: 40px; /* Slightly smaller spinner on mobile */
+        height: 40px;
+        border-width: 5px; /* Adjust border thickness */
+      }
+    }
+
+    @media (max-width: 400px) {
+      .logo {
+        font-size: 1.6rem; /* Even smaller font size for very small phones */
+      }
     }
   </style>
 </head>
@@ -54,8 +78,9 @@
   </div>
 
   <script>
+    // Redirect to Homepage.html after 5 seconds (5000 milliseconds)
     setTimeout(() => {
-      window.location.href = "Homepage.html"; // Redirect after 5 seconds
+      window.location.href = "Homepage.html";
     }, 5000);
   </script>
 
