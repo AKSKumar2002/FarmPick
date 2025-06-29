@@ -1,0 +1,91 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <!-- Meta tags -->
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <!-- Title -->
+    <title>Contact Form - Farm Pick</title>
+    <!-- Link to CSS file -->
+    <link rel="stylesheet" href="css/style2.css">
+</head>
+<body>
+    <!-- Main container -->
+    <div class="container">
+        <h1>Get in Touch</h1>
+        <p>Fill up the form to get in touch with us. </p>
+
+        <!-- Contact form section -->
+        <div class="contact-box">
+            <!-- Left side of the form -->
+            <div class="container-left">
+                <h3>Fill the Form*</h3>
+                <!-- Form -->
+                <form id="contactForm" onsubmit="return validateForm()">
+                    <div class="input-row">
+                        <div class="input-group">
+                            <label>Name*</label>
+                            <input type="text" id="name" placeholder="Enter your Name" required>
+                        </div>
+
+                        <div class="input-group">
+                            <label>Phone*</label>
+                            <input type="text" id="phone" placeholder="+91 1234567890" required>
+                        </div>
+                    </div>
+                    
+                    <!-- Input row for Email and Subject -->
+                    <div class="input-row">
+                        <div class="input-group">
+                            <label>Email*</label>
+                            <input type="email" id="email" placeholder="youremail@gmail.com" required>
+                        </div>
+
+                        <div class="input-group">
+                            <label>Subject</label>
+                            <input type="text" id="subject" placeholder="Inquiry">
+                        </div>                       
+                    </div>
+
+                    <!-- Label for Message textarea -->
+                    <label>Message*</label>
+                    <textarea rows="10" id="message" placeholder="Enter your Message" required></textarea>
+                    <button type="submit">SEND MESSAGE</button>
+                </form>
+            </div>
+            <!-- Right side with contact information -->
+            <div class="container-right">
+                <h3>Reach Us</h3>
+                <!-- Table for contact information -->
+                <table>
+                    <tr>
+                        <td>Email: </td>
+                        <td>hello@e-farmpick.in</td>
+                    </tr>
+
+                    <tr>
+                        <td>Phone: </td>
+                        <td>+(91) 88259 35176</td>
+                    </tr>
+
+                    <tr>
+                        <td>Address: </td>
+                        <td>Farm Pick<br>
+                            Malumichampatti, <br>
+                            Coimbatore - 641035, India</td>
+                    </tr>
+                </table>
+                
+                <!-- Map section -->
+                <div class="map">
+                    <!-- Google Map iframe -->
+                    <iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3918.113843471618!2d76.9970381!3d10.9038859!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x3ba8594abebaab39%3A0x147b82ec91960583!2sFARM%20PICK!5e0!3m2!1sen!2sin!4v1718355400000!5m2!1sen!2sin
+"></iframe>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- JavaScript file -->
+    <script src="assets/js/script.js"></script>
+</body>
+</html>

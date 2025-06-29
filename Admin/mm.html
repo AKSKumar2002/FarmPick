@@ -1,0 +1,106 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Admin Maintenance Mode</title>
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600&display=swap" rel="stylesheet">
+  <style>
+    * {
+      margin: 0; padding: 0; box-sizing: border-box;
+    }
+    body {
+      font-family: 'Poppins', sans-serif;
+      height: 100vh;
+      background: linear-gradient(135deg, #0f2027, #203a43, #2c5364);
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      overflow: hidden;
+    }
+    .card {
+      background: rgba(255, 255, 255, 0.05);
+      backdrop-filter: blur(15px);
+      border: 1px solid rgba(255, 255, 255, 0.1);
+      padding: 3rem;
+      border-radius: 20px;
+      text-align: center;
+      color: white;
+      max-width: 400px;
+      animation: fadeInUp 0.8s ease forwards;
+      box-shadow: 0 0 40px rgba(0,0,0,0.4);
+    }
+    .card h1 {
+      font-size: 2rem;
+      margin-bottom: 1rem;
+    }
+    .card p {
+      font-size: 1rem;
+      margin-bottom: 2rem;
+    }
+    .gear {
+      font-size: 50px;
+      animation: bounce 2s infinite;
+    }
+    .btn {
+      padding: 0.8rem 1.5rem;
+      background-color: #00c6ff;
+      border: none;
+      border-radius: 30px;
+      color: white;
+      font-size: 1rem;
+      cursor: pointer;
+      transition: 0.3s ease;
+      text-decoration: none;
+    }
+    .btn:hover {
+      background-color: #0072ff;
+    }
+
+    @keyframes fadeInUp {
+      from {
+        transform: translateY(40px);
+        opacity: 0;
+      }
+      to {
+        transform: translateY(0);
+        opacity: 1;
+      }
+    }
+
+    @keyframes bounce {
+      0%, 100% {
+        transform: translateY(0);
+      }
+      50% {
+        transform: translateY(-10px);
+      }
+    }
+
+    @media (max-width: 500px) {
+      .card {
+        margin: 1rem;
+        padding: 2rem;
+      }
+    }
+  </style>
+</head>
+<body>
+
+  <div class="card">
+    <div class="gear">⚙️</div>
+    <h1>Admin Page in Maintenance</h1>
+    <p>This admin section is still under maintenance.<br>
+       Please contact <strong>Ajith</strong> for admin rights access.</p>
+    <a href="mailto:ajith@example.com" class="btn">Contact Ajith</a>
+  </div>
+
+  <script>
+    document.addEventListener('keydown', function (e) {
+      if (e.key === "Enter") {
+        e.preventDefault();
+      }
+    });
+  </script>
+</body>
+</html>
