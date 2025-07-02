@@ -50,6 +50,7 @@ document.getElementById("signup-form").addEventListener("submit", (e) => {
 });
 
 // Sign In
+// Sign In
 document.getElementById("signin-form").addEventListener("submit", (e) => {
   e.preventDefault();
 
@@ -66,6 +67,7 @@ document.getElementById("signin-form").addEventListener("submit", (e) => {
     .then(res => res.json())
     .then(res => {
       if (res.status === "success") {
+        localStorage.setItem('loggedInUser', data.email); // ✅ save email!
         showPopup("Login successful!", "success");
         setTimeout(() => window.location.href = "Homepage.html", 2000);
       } else {
@@ -73,6 +75,7 @@ document.getElementById("signin-form").addEventListener("submit", (e) => {
       }
     });
 });
+
 
 // Toggle Password Visibility
 document.querySelectorAll(".toggle-password").forEach(icon => {

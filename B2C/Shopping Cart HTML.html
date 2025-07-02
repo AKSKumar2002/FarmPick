@@ -2,10 +2,10 @@
 <html lang="en">
 
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>FarmPick - Shopping Cart</title>
-  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600&display=swap" rel="stylesheet" />
   <style>
     * {
       box-sizing: border-box;
@@ -130,64 +130,60 @@
 <body>
   <header>
     <div class="logo">
-      <img src="images/FarmPick Logo.png" alt="FarmPick Logo">
+      <img src="images/FarmPick Logo.png" alt="FarmPick Logo" />
     </div>
     <h1>Happy Shopping</h1>
   </header>
 
-  <section class="products-container" id="productList">
-    <!-- Products will be rendered here -->
-  </section>
+  <section class="products-container" id="productList"></section>
+  <section class="cart-container" id="cart"></section>
 
-  <section class="cart-container" id="cart">
-    <!-- Cart items will be rendered here -->
-  </section>
-
-  <div class="cart-summary" id="summary">
+  <div class="cart-summary">
     <p><strong>Total Items:</strong> <span id="totalItems">0</span></p>
     <p><strong>Total Price:</strong> Rs. <span id="totalPrice">0</span></p>
     <button onclick="checkout()">Proceed to Checkout</button>
   </div>
 
+  <script src="https://checkout.razorpay.com/v1/checkout.js"></script>
   <script>
     const products = [
       { id: 1, name: "Tomato", price: 17, image: "images/Tomato11.jpg" },
       { id: 2, name: "Onion", price: 22, image: "images/onion.jpg" },
-      { id: 3, name: "Carrot", price: 30, image: "images/carrot.jpg" }
+      { id: 3, name: "Carrot", price: 30, image: "images/carrot.jpg" },
     ];
 
     const cart = {};
 
     function renderProducts() {
       const productList = document.getElementById("productList");
-      products.forEach(product => {
+      products.forEach((product) => {
         const el = document.createElement("div");
         el.className = "product-card";
         el.innerHTML = `
-          <img src="${product.image}" alt="${product.name}">
+          <img src="${product.image}" alt="${product.name}" />
           <h3>${product.name}</h3>
           <p>Rs. ${product.price}</p>
-          <button onclick='addToCart(${JSON.stringify(product.id)})'>Add to Cart</button>
+          <button onclick="addToCart(${product.id})">Add to Cart</button>
         `;
         productList.appendChild(el);
       });
     }
 
-    function addToCart(productId) {
-      const product = products.find(p => p.id === productId);
-      if (!cart[productId]) cart[productId] = { ...product, quantity: 0 };
-      cart[productId].quantity++;
+    function addToCart(id) {
+      const product = products.find((p) => p.id === id);
+      if (!cart[id]) cart[id] = { ...product, quantity: 0 };
+      cart[id].quantity++;
       renderCart();
     }
 
-    function removeFromCart(productId) {
-      delete cart[productId];
+    function removeFromCart(id) {
+      delete cart[id];
       renderCart();
     }
 
-    function updateQuantity(productId, newQty) {
-      if (newQty < 1) return;
-      cart[productId].quantity = newQty;
+    function updateQuantity(id, qty) {
+      if (qty < 1) return;
+      cart[id].quantity = qty;
       renderCart();
     }
 
@@ -195,16 +191,16 @@
       const cartContainer = document.getElementById("cart");
       cartContainer.innerHTML = "";
       let totalPrice = 0, totalItems = 0;
-      Object.values(cart).forEach(item => {
+      Object.values(cart).forEach((item) => {
         totalPrice += item.price * item.quantity;
         totalItems += item.quantity;
         const el = document.createElement("div");
         el.className = "cart-item";
         el.innerHTML = `
-          <img src="${item.image}" alt="${item.name}">
+          <img src="${item.image}" alt="${item.name}" />
           <span>${item.name}</span>
           <div class="cart-actions">
-            Qty: <input type="number" value="${item.quantity}" min="1" onchange="updateQuantity(${item.id}, this.value)">
+            Qty: <input type="number" value="${item.quantity}" min="1" onchange="updateQuantity(${item.id}, this.value)" />
             <button onclick="removeFromCart(${item.id})">Remove</button>
           </div>
         `;
@@ -214,19 +210,65 @@
       document.getElementById("totalItems").innerText = totalItems;
     }
 
-    function checkout() {
-      const orderDetails = {
-        items: Object.values(cart).map(i => `${i.name} x${i.quantity}`).join(", "),
-        total: document.getElementById("totalPrice").innerText
-      };
-      fetch("YOUR_GOOGLE_SCRIPT_URL", {
+    <!-- ✅ Inside your checkout() -->
+
+    async function checkout() {
+      const totalPrice = parseInt(document.getElementById("totalPrice").innerText);
+      const cartItems = Object.values(cart).map(item => ({
+        name: item.name,
+        quantity: item.quantity,
+        price: item.price
+      }));
+
+      const userEmail = localStorage.getItem('loggedInUser');
+
+      const response = await fetch("http://localhost:3000/create-order", {
         method: "POST",
-        body: JSON.stringify(orderDetails)
-      }).then(() => {
-        alert("Order submitted! Redirecting to payment...");
-        window.location.href = "payment.html";
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({
+          amount: totalPrice * 100,
+          currency: "INR",
+          receipt: "rcptid_" + Date.now(),
+          notes: { cartItems: JSON.stringify(cartItems) }
+        })
       });
+
+      const order = await response.json();
+
+      const options = {
+        key: "rzp_test_dyZxLZwuaOktCe",
+        amount: order.amount,
+        currency: "INR",
+        name: "FarmPick",
+        description: cartItems.map(i => `${i.name} x${i.quantity}`).join(", "),
+        order_id: order.id,
+        handler: async function (response) {
+          alert(`Payment successful: ${response.razorpay_payment_id}`);
+
+          // ✅ Optional: Call Google Apps Script if you have one
+          // const scriptURL = "YOUR_GOOGLE_APPS_SCRIPT_URL";
+          // await fetch(scriptURL, {
+          //   method: "POST",
+          //   body: JSON.stringify({
+          //     action: "saveOrder",
+          //     email: userEmail,
+          //     items: cartItems,
+          //     totalPrice: totalPrice,
+          //     paymentId: response.razorpay_payment_id
+          //   }),
+          // });
+
+          // ✅ Clear cart & redirect
+          localStorage.removeItem('cart');
+          window.location.href = "payment.html";
+        },
+        theme: { color: "#28a745" }
+      };
+
+      const rzp = new Razorpay(options);
+      rzp.open();
     }
+
 
     renderProducts();
   </script>
