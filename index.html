@@ -7,6 +7,8 @@
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600&display=swap" rel="stylesheet">
+  <script src="https://checkout.razorpay.com/v1/checkout.js"></script>
+
   <style>
     * {
       box-sizing: border-box;
@@ -135,7 +137,7 @@
   <!-- Loader -->
   <div class="loader-container" id="loader">
     <div class="logo">
-      <img src="/B2C/images/FarmPick Logo.png" alt="Farmpick Logo" />
+      <img src="B2C\images\FarmPick Logo.png" alt="Farmpick Logo" />
     </div>
     <div class="spinner"></div>
   </div>
@@ -146,9 +148,9 @@
       <h2>Select Website</h2>
       <select id="userType">
         <option value="" disabled selected>Select</option>
-        <option value="B2BB\home.html">B2B</option>
-        <option value="B2C\Login And Registration HTML.html">B2C</option>
-        <option value="Admin\Login And Registration HTML.html">Admin</option>
+        <option value="B2BB\login and signup.html">B2B</option>
+        <option value="B2C\login and signup.html">B2C</option>
+        <option value="Admin\login and signup.html">Admin</option>
       </select>
       <button onclick="goToPage()">Go</button>
     </div>
