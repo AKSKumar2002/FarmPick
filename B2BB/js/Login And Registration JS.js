@@ -42,7 +42,7 @@ document.getElementById("signup-form").addEventListener("submit", (e) => {
     .then(res => {
       if (res.status === "success") {
         showPopup("Signup successful!", "success");
-        setTimeout(() => window.location.href = "Homepage.html", 2000);
+        setTimeout(() => window.location.href = "homepage.html", 2000);
       } else {
         showPopup("Signup failed.", "error");
       }
