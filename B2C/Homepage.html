@@ -727,68 +727,48 @@
         </div>
     </footer>
 
+    <script src="script.js"></script>
     <script>
-        // Auto-scroll for the customer reviews section
-        const reviewContainer = document.querySelector('.review-container');
-        let scrollInterval;
-
-        function startAutoScroll() {
-            scrollInterval = setInterval(() => {
-                const scrollAmount = 320 + 25; // Card width + gap
-                reviewContainer.scrollLeft += scrollAmount;
-                if (reviewContainer.scrollLeft + reviewContainer.clientWidth >= reviewContainer.scrollWidth - 10) {
-                    reviewContainer.scrollLeft = 0;
-                }
-            }, 3000);
-        }
-
-        function stopAutoScroll() {
-            clearInterval(scrollInterval);
-        }
-
-        // Start auto-scroll when the page loads
-        document.addEventListener('DOMContentLoaded', startAutoScroll);
-
-        // Optional: Pause scroll on hover
-        reviewContainer.addEventListener('mouseenter', stopAutoScroll);
-        reviewContainer.addEventListener('mouseleave', startAutoScroll);
-
-        // JavaScript for Location Selection Pop-up
+        // Location popup logic using localStorage
         const locationPopupOverlay = document.getElementById('locationPopupOverlay');
         const citySelect = document.getElementById('city-select');
         const setLocationBtn = document.getElementById('set-location-btn');
-
-        // Function to show the pop-up
+    
+        // Function to show popup
         function showLocationPopup() {
             locationPopupOverlay.classList.add('active');
-            document.body.style.overflow = 'hidden'; // Prevent scrolling background
+            document.body.style.overflow = 'hidden'; // prevent scroll
         }
-
-        // Function to hide the pop-up
+    
+        // Function to hide popup
         function hideLocationPopup() {
             locationPopupOverlay.classList.remove('active');
-            document.body.style.overflow = ''; // Restore scrolling
+            document.body.style.overflow = '';
         }
-
-        // Show pop-up every time the page loads
-        document.addEventListener('DOMContentLoaded', showLocationPopup);
-
-        // Event listener for setting the location
+    
+        // Check if city is already selected
+        document.addEventListener('DOMContentLoaded', () => {
+            const storedCity = localStorage.getItem('farmpick_selected_city');
+            if (!storedCity) {
+                showLocationPopup();
+            } else {
+                console.log(`User's selected city: ${storedCity}`);
+            }
+        });
+    
+        // Save city to localStorage on click
         setLocationBtn.addEventListener('click', () => {
             const selectedCity = citySelect.value;
             if (selectedCity) {
-                // Store the selected city in localStorage (optional, but good for other logic)
                 localStorage.setItem('farmpick_selected_city', selectedCity);
-                alert(`You have selected ${selectedCity.charAt(0).toUpperCase() + selectedCity.slice(1)}. Enjoy your shopping!`);
-                hideLocationPopup(); // Hide the pop-up
-                // In a real application, you would now:
-                // 1. Load products specific to this city.
-                // 2. Update UI elements to show the selected city.
+                alert(`You selected ${selectedCity.charAt(0).toUpperCase() + selectedCity.slice(1)}.`);
+                hideLocationPopup();
             } else {
-                alert("Please select a city to proceed.");
+                alert("Please select a city to continue.");
             }
         });
     </script>
+    
 </body>
 
 </html>
